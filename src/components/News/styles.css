@@ -41,7 +41,6 @@
 img {
   width: 100%;
   height: auto;
-  aspect-ratio: 1;
 }
 
 .avatar {
@@ -57,11 +56,11 @@ img {
   margin: auto 0;
 } */
 
-.news-item-container p {
+/* .news-item-container p {
   margin: 0px;
-  /* font-size: 20px; */
-  /* font-weight: bold; */
-}
+  font-size: 20px; 
+   font-weight: bold;
+} */
 
 @media only screen and (max-device-width: 550px) {
   .news-container {
@@ -76,5 +75,7 @@ img {
     max-width: 90vw;
   }
 
-
+  .news-container ul {
+    padding-inline-start: 14px;
+  }
 }
