@@ -1,0 +1,115 @@
+:root {
+    --tab-text-color: #57606f;
+    --tab-text-color--active: var(--site-text-color, #222);
+    --tab-text-color--highlight: var(--site-link-color, #000);
+    --tab-border-color: #000;
+    --tab-border-hover: #9f9f9f;
+    --tab-panel-bg-color: #fff;
+}
+
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 80vh;
+}
+
+.tab-nav {
+    overflow-x: scroll;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+}
+
+.tab-list::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-list {
+    width: fit-content;
+    min-width: 100%;
+    display: flex;
+    /* gap: .5em; */
+    margin: -2px;
+    padding: 0;
+    border-bottom: 2px solid #eee;
+    color: #888;
+}
+
+.tab-list li {
+    display: block;
+    margin-bottom: -2px;
+    z-index: 1;
+}
+
+.tab-btn {
+    font: inherit;
+    padding: 0.75em 1em;
+    background-color: transparent;
+    border: 2px solid var(--tab-border-color);
+    border-width: 0 0 2px;
+    cursor: pointer;
+    color: inherit;
+    white-space: nowrap;
+}
+
+.tab-btn:not(.tab-btn--active):hover {
+    border-color: var(--tab-border-hover);
+    color: var(--site-text-color);
+}
+
+.tab-btn--active {
+    background-color: var(--tab-panel-bg-color);
+    color: var(--tab-text-color--highlight);
+    border-color: var(--tab-border-color);
+    border-width: 2px 2px 0px 2px;
+}
+
+.tab-panel {
+    z-index: 0;
+    /* margin-top: 1em; */
+    padding: 1em;
+    border: 2px solid var(--tab-border-color);
+    background-color: var(--tab-panel-bg-color);
+    border-radius: .25em;
+    box-shadow: #000 16px 18px;
+    display: flex;
+    justify-content: center;
+    /* display: grid; */
+    /* display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s ease-out; */
+    overflow-y: auto;
+}
+
+/* .tab-panel>div {
+    overflow: hidden;
+}
+
+.tab-panel.is-open {
+    grid-template-rows: 1fr;
+} */
+
+/* .tab-panel>.news-container>.article {
+
+    overflow: hidden;
+
+} */
+
+/* .tab-panel>.news-container:hover {
+    grid-template-rows: 1fr;
+
+} */
+
+@media only screen and (max-device-width: 550px) {
+    .tabs {
+        max-height: 90vh;
+    }
+
+    .tab-panel {
+        max-width: 90vw;
+    }
+
+
+}

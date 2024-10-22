@@ -1,0 +1,64 @@
+.profile-container {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1000px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* .input-wrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.input-wrapper input {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid black;
+  border-radius: .25em;
+  box-shadow: #000 6px 8px;
+}
+
+.input-wrapper button {
+  padding: 5px 12px;
+  border: 1px solid black;
+  border-radius: .25em;
+  box-shadow: #000 6px 8px;
+  cursor: pointer;
+} */
+
+.user {
+  padding: 15px;
+  border-radius: 10px;
+  border: #000 1px solid;
+  background-color: coral;
+}
+
+.avatar {
+  height: 100px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  outline: 1px solid;
+}
+
+.name-container {
+  display: grid;
+  gap: 20px;
+  justify-self: center;
+  margin-top: 20px;
+}
+
+.name-container p {
+  margin: 0px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.profile-info div {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}

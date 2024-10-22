@@ -1,0 +1,43 @@
+.input-wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--tab-text-color--active)
+}
+
+.input-wrapper input {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: .25em;
+    box-shadow: #000 6px 8px;
+    background-color: inherit;
+    color: inherit;
+}
+
+.input-wrapper button {
+    padding: 5px 12px;
+    border: 1px solid black;
+    border-radius: .25em;
+    box-shadow: #000 6px 8px;
+    background-color: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+input:focus,
+input:focus-visible {
+    outline: none;
+}
+
+@media only screen and (max-device-width: 550px) {
+    /* .input-wrapper {
+        width: 100%;
+    } */
+
+    .input-wrapper input {
+        /* width: 50vw; */
+        padding: 2px;
+    }
+}
