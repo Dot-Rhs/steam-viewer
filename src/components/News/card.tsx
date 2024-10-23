@@ -1,33 +1,10 @@
 // import { IProfile } from "../../interfaces/IProfile";
 import parse from 'html-react-parser';
+import { ShortDate } from '../ShortDate';
 
 // interface IProps {
 //   user: IProfile;
 // }
-
-const PersonaState = ({ state }) => {
-  const states = {
-    0: 'Offline', 1: 'Online', 2: 'Busy', 3: 'Away', 4: 'Snooze', 5: 'looking to trade', 6: 'looking to play'
-  }
-
-  return (<div>
-    <p>Status:</p>
-    <p><b>{states[state]}</b></p>
-  </div>)
-}
-
-const ShortDate = ({ time }) => {
-  const createdDate = new Date(time * 1000);
-
-  return (
-    <>
-      {`${ createdDate.getDate() } ${ createdDate.toLocaleString("en-GB", {
-        timeZone: "UTC",
-        month: "short"
-      }) } ${ createdDate.getFullYear() }`}
-    </>
-  )
-}
 
 export const Card = ({ newsItems }) => {
   if (!newsItems.length) return
@@ -52,27 +29,9 @@ export const Card = ({ newsItems }) => {
               <ShortDate time={date} /> by {author}
             </p>
             {tags?.map((tag, i) => <p key={`tag-${ i }`}><i>tags: </i>{tag}</p>)}
-            {/* <a href={profileurl}>{personaname}{realname && <p>
-              {realname}
-              </p>
-              }
-              </a> */}
-            {/* <p>
-              User joined on {" "}
-              <ShortDate time={timecreated} />
-              </p> */}
           </div>
           <div className="content-info">
             {parse(contents)}
-            {/* <PersonaState state={personastate} />
-            <div>
-              <p>Steam ID</p>
-              <p>{steamid}</p>
-            </div> */}
-            {/* <div>
-          <p>Following</p>
-          <p>{following}</p>
-          </div>*/}
           </div>
         </div>
       )

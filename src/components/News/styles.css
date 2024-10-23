@@ -38,7 +38,7 @@
   word-wrap: break-word;
 }
 
-img {
+.article img {
   width: 100%;
   height: auto;
 }

@@ -28,7 +28,7 @@ export const SearchUser = () => {
 
   return (
     <div className="profile-container">
-      <SearchBar handleSubmit={handleSubmit} />
+      <SearchBar handleSubmit={handleSubmit} placeHolder={"Enter Steam ID for player..."} name='search-by-player-id' />
       {/* <div className="input-wrapper">
         <input
           name="search-by-name"

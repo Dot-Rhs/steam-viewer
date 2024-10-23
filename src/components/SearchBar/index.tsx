@@ -1,15 +1,15 @@
 import { useState } from "react"
 import './styles.css'
 
-export const SearchBar = ({ handleSubmit }) => {
+export const SearchBar = ({ handleSubmit, placeHolder, name }) => {
     const [value, setValue] = useState('')
 
     return (
         <div className="input-wrapper">
             <input
-                name="search-by-app-id"
+                name={name}
                 type="text"
-                placeholder="Enter App ID for game..."
+                placeholder={placeHolder}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSubmit()}

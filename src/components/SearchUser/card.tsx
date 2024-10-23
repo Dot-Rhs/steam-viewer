@@ -1,32 +1,11 @@
 // import { IProfile } from "../../interfaces/IProfile";
 
+import { ShortDate } from "../ShortDate";
+import { PersonaState } from "./PersonaState";
+
 // interface IProps {
 //   user: IProfile;
 // }
-
-const PersonaState = ({ state }) => {
-  const states = {
-    0: 'Offline', 1: 'Online', 2: 'Busy', 3: 'Away', 4: 'Snooze', 5: 'looking to trade', 6: 'looking to play'
-  }
-
-  return (<div>
-    <p>Status:</p>
-    <p><b>{states[state]}</b></p>
-  </div>)
-}
-
-const ShortDate = ({ time }) => {
-  const createdDate = new Date(time * 1000);
-
-  return (
-    <>
-      {`${ createdDate.getDate() } ${ createdDate.toLocaleString("en-GB", {
-        timeZone: "UTC",
-        month: "short"
-      }) } ${ createdDate.getFullYear() }`}
-    </>
-  )
-}
 
 export const Card = ({ user }) => {
   const {
@@ -40,34 +19,27 @@ export const Card = ({ user }) => {
   return (
     <div className="user">
       <div className="name-container">
-        {/* <div> */}
         <img src={avatarfull} className="avatar" alt="User Image" />
-        {/* </div> */}
-        <a href={profileurl}>{personaname}{realname && <p>
-          {realname}
-        </p>
-        }
-        </a>
-
-        <p>
-          User joined on {" "}
-          <ShortDate time={timecreated} />
-        </p>
-        <p>
-          User last logged off {" "}
-          <ShortDate time={lastlogoff} />
-        </p>
+        <div className="name-details">
+          <a href={profileurl}>{personaname} <img src={'/src/assets/icons/external-link.svg'} alt='External Link' />
+          </a>
+          {realname && <p>
+            {realname}
+          </p>
+          }
+          <p>Steam ID: {steamid}</p>
+          <p>
+            User joined on {" "}
+            <ShortDate time={timecreated} />
+          </p>
+          <p>
+            User last logged off {" "}
+            <ShortDate time={lastlogoff} />
+          </p>
+          <PersonaState state={personastate} />
+        </div>
       </div>
       <div className="profile-info">
-        <PersonaState state={personastate} />
-        <div>
-          <p>Steam ID</p>
-          <p>{steamid}</p>
-        </div>
-        {/* <div>
-          <p>Following</p>
-          <p>{following}</p>
-        </div>*/}
       </div>
     </div>
   );

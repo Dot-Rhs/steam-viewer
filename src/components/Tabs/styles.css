@@ -19,7 +19,6 @@
     overflow-x: scroll;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
 }
 
 .tab-list::-webkit-scrollbar {

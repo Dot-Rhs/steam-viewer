@@ -2,8 +2,9 @@
   /* margin: 0 auto; */
   /* width: 90%; */
   max-width: 1000px;
-  /* padding: 20px; */
+  padding: 20px;
   /* border-radius: 8px; */
+  color: var(--site-text-color, #000);
 }
 
 /* .input-wrapper {
@@ -44,16 +45,19 @@
 }
 
 .name-container {
-  display: grid;
+  display: flex;
+  align-items: center;
   gap: 20px;
-  justify-self: center;
+  /* justify-self: center; */
   margin-top: 20px;
+  font-size: 16px;
 }
 
 .name-container p {
-  margin: 0px;
-  font-size: 20px;
-  font-weight: bold;
+  margin: 4px;
+  /* font-weight: bold; */
+  color: inherit;
+  */
 }
 
 .profile-info div {
@@ -61,4 +65,22 @@
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
+}
+
+.name-details {
+  text-align: left;
+}
+
+.name-details a {
+  color: inherit;
+  font-size: 24px;
+}
+
+.name-details a:hover {
+  color: #616161;
+}
+
+.name-details p {
+  margin-left: 0px;
+  font-size: 13px;
 }

@@ -47,7 +47,7 @@ export const News = () => {
 
     return (
         <div className="news-container">
-            <SearchBar handleSubmit={handleSubmit} />
+            <SearchBar handleSubmit={handleSubmit} placeHolder={"Enter App ID for game..."} name='search-by-app-id' />
 
             {loading && <h2>Loading...</h2>}
             {errorMsg && <h2>{errorMsg}</h2>}
