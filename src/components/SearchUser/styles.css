@@ -1,9 +1,9 @@
 .profile-container {
-  margin: 0 auto;
-  width: 90%;
+  /* margin: 0 auto; */
+  /* width: 90%; */
   max-width: 1000px;
-  padding: 20px;
-  border-radius: 8px;
+  /* padding: 20px; */
+  /* border-radius: 8px; */
 }
 
 /* .input-wrapper {
@@ -31,16 +31,16 @@
 
 .user {
   padding: 15px;
-  border-radius: 10px;
+  /* border-radius: 10px;
   border: #000 1px solid;
-  background-color: coral;
+  background-color: coral; */
 }
 
 .avatar {
-  height: 100px;
-  aspect-ratio: 1;
+  /* height: 100px;
+  aspect-ratio: 1; */
   border-radius: 50%;
-  outline: 1px solid;
+  /* outline: 1px solid; */
 }
 
 .name-container {

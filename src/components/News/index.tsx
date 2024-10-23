@@ -1,5 +1,5 @@
 
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import './styles.css'
 import { Card } from './card';
 import { SearchBar } from '../SearchBar';
@@ -8,12 +8,12 @@ const INITIAL_MAX_HEIGHT = 10000;
 
 export const News = () => {
     const [appId, setAppId] = useState(""); // 440 = Team Fortress 2
-    const [appData, setAppData] = useState(null);
+    const [appData, setAppData] = useState({ newsitems: [] });
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [count, setCount] = useState<number>(10);
 
-    const handleSubmit = async (val) => {
+    const handleSubmit = useMemo(() => async (val) => {
         console.log('what: ', val);
 
         setLoading(() => true);
@@ -23,7 +23,9 @@ export const News = () => {
             const data = await getAppNews.json();
             // const friendsData = await getFriends.json()
             // console.log('DAAA: ', contentRef.current.getBoundingClientRect().height)
-            setAppData(() => data.appnews.newsitems);
+            if (data.appnews.newsitems) {
+                setAppData((prev) => ({ newsitems: [...prev.newsitems, ...data.appnews.newsitems] }));
+            }
             setAppId(() => val);
 
             // if (tempHeight === null) return;
@@ -32,7 +34,7 @@ export const News = () => {
             if (error instanceof Error) setErrorMsg(() => error?.message);
         }
         setLoading(() => false);
-    };
+    }, [appData, appId]);
 
     // Sort the snap to top when loading more
 
@@ -50,14 +52,16 @@ export const News = () => {
             {loading && <h2>Loading...</h2>}
             {errorMsg && <h2>{errorMsg}</h2>}
             {
-                appData !== null && (!loading || errorMsg) ? (
-                    <>
+                // appData !== null &&
+                // (!loading || errorMsg) ? (
+                <>
 
-                        <Card newsItems={appData} />
-                        <button onClick={() => setCount((prev) => prev + 10)
-                        }>Load More...</button>
-                    </>
-                ) : null
+                    <Card newsItems={appData?.newsitems} />
+
+                    {appData.newsitems.length ? <button onClick={() => setCount((prev) => prev + 10)
+                    }>Load More...</button> : null}
+                </>
+                // ) : null
             }
 
         </div >

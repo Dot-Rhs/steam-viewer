@@ -43,13 +43,6 @@ img {
   height: auto;
 }
 
-.avatar {
-  height: 100px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  outline: 1px solid;
-}
-
 /* .news-container {
   display: grid;
   gap: 20px;

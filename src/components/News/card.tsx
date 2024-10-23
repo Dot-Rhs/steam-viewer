@@ -30,17 +30,7 @@ const ShortDate = ({ time }) => {
 }
 
 export const Card = ({ newsItems }) => {
-  console.log('AAAA: ', newsItems);
-
-  const htmlFrom = (htmlString) => {
-    const cleanHtmlString = DOMPurify.sanitize(htmlString,
-      { USE_PROFILES: { html: true } });
-    // const html = parse(cleanHtmlString);
-    return cleanHtmlString;
-  }
-
-  // const createdDate = new Date(timecreated * 1000);
-  // const lastLogOff = new Date(lastlogoff * 1000)
+  if (!newsItems.length) return
 
   return (
     newsItems.map((item, idx) => {
@@ -55,7 +45,6 @@ export const Card = ({ newsItems }) => {
         <div className="article" key={`news-item-${ idx }`} >
           <div>
             <h2 role="doc-subtitle">{title}</h2>
-            {/* <img src={avatarfull} className="avatar" alt="User Image" /> */}
           </div>
           <div className="news-item-container">
             <p>

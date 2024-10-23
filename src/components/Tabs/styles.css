@@ -102,7 +102,17 @@
 
 } */
 
-@media only screen and (max-device-width: 550px) {
+@media only screen and (max-width: 1024px) {
+    .tabs {
+        max-height: 90vh;
+    }
+
+    .tab-panel {
+        max-width: 80vw;
+    }
+}
+
+@media only screen and (max-device-width: 1024px) {
     .tabs {
         max-height: 90vh;
     }
@@ -110,6 +120,4 @@
     .tab-panel {
         max-width: 90vw;
     }
-
-
 }

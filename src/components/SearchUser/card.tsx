@@ -39,10 +39,10 @@ export const Card = ({ user }) => {
 
   return (
     <div className="user">
-      <div>
-        <img src={avatarfull} className="avatar" alt="User Image" />
-      </div>
       <div className="name-container">
+        {/* <div> */}
+        <img src={avatarfull} className="avatar" alt="User Image" />
+        {/* </div> */}
         <a href={profileurl}>{personaname}{realname && <p>
           {realname}
         </p>

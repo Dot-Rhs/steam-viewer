@@ -63,7 +63,7 @@
   color: #888;
 }
 
-@media only screen and (max-device-width: 550px) {
+@media only screen and (max-device-width: 1024px) {
   .App {
     max-width: 80vw;
     /* margin: .5em auto */
