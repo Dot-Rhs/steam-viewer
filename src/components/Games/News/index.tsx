@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import './styles.css'
 import { Card } from './card';
-import { SearchBar } from '../SearchBar';
+// import { SearchBar } from '../SearchBar';
 
 const INITIAL_MAX_HEIGHT = 10000;
 
@@ -13,12 +13,12 @@ export const News = ({ appId }) => {
     const [loading, setLoading] = useState(false);
     const [count, setCount] = useState<number>(10);
 
-    const handleSubmit = useMemo(() => async (val) => {
-        console.log('what: ', val);
+    const handleFetchNews = useMemo(() => async (val) => {
 
         setLoading(() => true);
         try {
             const getAppNews = await fetch(`http://localhost:5000/getNews/${ val }?count=${ count }`);
+            console.log('what2: ', val, count, appId);
 
             const data = await getAppNews.json();
             // const friendsData = await getFriends.json()
@@ -26,7 +26,7 @@ export const News = ({ appId }) => {
             if (data.appnews.newsitems) {
                 setAppData((prev) => ({ newsitems: [...prev.newsitems, ...data.appnews.newsitems] }));
             }
-
+            // setAppId(() => val);
 
             // if (tempHeight === null) return;
             // setHeight(height === 0 ? tempHeight : 0);
@@ -40,14 +40,20 @@ export const News = ({ appId }) => {
 
     useEffect(() => {
         if (count > 10) {
-            handleSubmit(appId);
+            handleFetchNews(appId);
         }
     }, [count]);
+
+    useEffect(() => {
+        console.log('aaaa: ,', appId);
+
+        handleFetchNews(appId)
+    }, [appId])
 
 
     return (
         <div className="news-container">
-            <SearchBar handleSubmit={handleSubmit} placeHolder={"Enter App ID for game..."} name='search-by-app-id' />
+            {/* <SearchBar handleSubmit={handleSubmit} placeHolder={"Enter App ID for game..."} name='search-by-app-id' /> */}
 
             {loading && <h2>Loading...</h2>}
             {errorMsg && <h2>{errorMsg}</h2>}

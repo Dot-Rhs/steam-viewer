@@ -6,6 +6,7 @@ import './App.css'
 import { News } from './components/News'
 import TabItem from './components/Tabs/TabItem'
 import { TabList } from './components/Tabs'
+import { Games } from './components/Games'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,10 +14,14 @@ function App() {
   return (
     <div className='App'>
       <TabList activeTabIndex={1}>
-        <TabItem label='News Tab'>
+        <TabItem label='Games Tab'>
+
+          <Games />
+        </TabItem>
+        {/* <TabItem label='News Tab'>
 
           <News />
-        </TabItem>
+        </TabItem> */}
         <TabItem label='Player Tab' >
 
           <SearchUser />
