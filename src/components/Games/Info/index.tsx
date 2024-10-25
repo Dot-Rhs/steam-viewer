@@ -13,14 +13,14 @@ export const InfoPanel = ({ appId }) => {
 
             setLoading(() => true);
             try {
-                console.log('sdsds');
-                const getGameInfo = await fetch(`http://localhost:5000/gameInfo/${ appId }`);
+                const getGameInfo = await fetch(`http://localhost:5000/aggregateGameInfo/${ appId }`);
                 console.log('what2: ', appId);
 
-                const data = await getGameInfo.json();
+                const infoData = await getGameInfo.json();
                 // const friendsData = await getFriends.json()
-                if (data[`${ appId }`] && data[`${ appId }`].success === true) {
-                    const gameData = data[`${ appId }`].data
+                console.log('sdsds: ', infoData);
+                if (infoData.success) {
+                    const gameData = infoData.data
 
                     const formattedData = {
                         id: gameData.steam_appid,
@@ -31,7 +31,8 @@ export const InfoPanel = ({ appId }) => {
                         website: gameData.website,
                         screenshots: gameData.screenshots,
                         releaseDate: gameData.release_date,
-                        backgroundImg: gameData.background
+                        backgroundImg: gameData.background,
+                        currentPlayers: gameData.currentPlayers
                     }
 
                     setGameInfo((prev) => (formattedData));
@@ -51,7 +52,7 @@ export const InfoPanel = ({ appId }) => {
     }, [appId])
 
     return (
-        <div>INFOOOO
+        <div className="info-container">INFOOOO
             {loading && <h2>Loading...</h2>}
             {errorMsg && <h2>{errorMsg}</h2>}
             <>

@@ -13,11 +13,11 @@ export const SearchUser = () => {
   const handleSubmit = async (value) => {
     setLoading(() => true);
     try {
-      const getPlayer = await fetch(`http://localhost:5000/getPlayer/${ value }`);
-      const getFriends = await fetch(`http://localhost:5000/getFriends/${ value }`)
+      const getPlayer = await fetch(`http://localhost:5000/player/${ value }`);
+      // const getFriends = await fetch(`http://localhost:5000/getFriends/${ value }`)
       const data = await getPlayer.json();
-      const friendsData = await getFriends.json()
-      console.log('DAAA: ', friendsData)
+      // const friendsData = await getFriends.json()
+      console.log('DAAA: ', data)
       setUserData(() => data.response.players[0]);
       setUserName(() => "");
     } catch (error: unknown) {

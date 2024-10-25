@@ -5,3 +5,4 @@
 - Get players wishlist
 - get Player bans
 - GetAppList
+- Move to docker

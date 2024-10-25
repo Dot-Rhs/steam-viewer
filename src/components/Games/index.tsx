@@ -59,13 +59,13 @@ export const Games = () => {
             {errorMsg && <h2>{errorMsg}</h2>}
             {appId &&
                 (!loading || errorMsg) ? (
-                <TabList activeTabIndex={1}>
+                <TabList activeTabIndex={0}>
                     <TabItem label='Info Tab'>
                         <InfoPanel appId={appId} />
                     </TabItem >
-                    {/* <TabItem label='News Tab'>
+                    <TabItem label='News Tab'>
                         <News appId={appId} />
-                    </TabItem > */}
+                    </TabItem >
                 </TabList >) : null
             }
 

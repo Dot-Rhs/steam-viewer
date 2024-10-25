@@ -30,6 +30,7 @@ export const Card = ({ data }: IProps) => {
 
     <div className="info"  >
       <img src={data.headerImg} alt='header image' />
+      <p className='player-count'>Current Players Online: {data.currentPlayers}</p>
       <div>
         <h2 role="doc-subtitle">{data.name}</h2>
         <p>

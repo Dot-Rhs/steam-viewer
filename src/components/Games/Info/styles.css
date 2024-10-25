@@ -1,9 +1,10 @@
-.news-container {
+.info-container {
   /* margin: 0 auto; */
   width: 100%;
   max-width: 1000px;
   padding: 20px;
   border-radius: 8px;
+  color: var(--tab-text-color--active)
 }
 
 /* .input-wrapper {
@@ -34,7 +35,6 @@
   border-top: #000 1px solid;
   background-color: var(--tab-panel-bg-color);
   text-align: left;
-  color: var(--tab-text-color--active);
   word-wrap: break-word;
 }
 
@@ -58,6 +58,14 @@
   font-size: 20px; 
    font-weight: bold;
 } */
+
+.player-count {
+  position: relative;
+  top: -40px;
+  left: 10px;
+  color: white;
+  mix-blend-mode: difference;
+}
 
 .screenshots-container {
   display: grid;
