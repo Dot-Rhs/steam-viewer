@@ -1,0 +1,33 @@
+services:
+  gameinfoservice:  
+    build:    
+      context: ./server/services/gameInfoService # Correct the path if necessary 
+      dockerfile: Dockerfile 
+    ports: 
+      - 5001:5001
+
+  playerinfoservice:
+    build:
+      context: ./server/services/playerInfoService
+      dockerfile: Dockerfile
+    ports:
+      - 5002:5002
+
+  server:      
+    build:
+      context: ./server/
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    depends_on:
+      - gameinfoservice
+      - playerinfoservice
+    develop:
+      watch:
+        - action: sync
+          path: ./server
+          target: /usr/src/app/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
