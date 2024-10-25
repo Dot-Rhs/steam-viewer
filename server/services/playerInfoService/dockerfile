@@ -3,5 +3,5 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 3001
-CMD ["node", "playerInfoService.js"]
+EXPOSE 5002
+CMD ["./node_modules/.bin/nodemon", "playerInfoService.js"]

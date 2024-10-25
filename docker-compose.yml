@@ -5,6 +5,17 @@ services:
       dockerfile: Dockerfile 
     ports: 
       - 5001:5001
+    environment:
+        - GAMES_API_BASE_DOMAIN=http://127.0.0.1:5001
+    develop:
+      watch:
+        - action: sync
+          path: ./server
+          target: /usr/src/app/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
 
   playerinfoservice:
     build:
@@ -12,6 +23,17 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5002:5002
+    environment:
+        - PLAYERS_API_BASE_DOMAIN=http://127.0.0.1:5002
+    develop:
+      watch:
+        - action: sync
+          path: ./server
+          target: /usr/src/app/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
 
   server:      
     build:
@@ -19,6 +41,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5000:5000
+    environment:
+        - SERVER_API_BASE_DOMAIN=http://127.0.0.1:5000
     depends_on:
       - gameinfoservice
       - playerinfoservice

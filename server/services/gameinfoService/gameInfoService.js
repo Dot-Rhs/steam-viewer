@@ -4,7 +4,15 @@ const axios = require("axios");
 const app = express();
 const port = 5001;
 
+app.use((req, res, next) => {
+  console.log(
+    "incoming request to gameinfo service: " + req.method + " " + req.url,
+  );
+  next();
+});
+
 app.get("/getGameInfo/:id", async (req, res) => {
+  console.log("hello: ");
   try {
     const response = await axios.get(
       `http://store.steampowered.com/api/appdetails?appids=${req.params.id}`,

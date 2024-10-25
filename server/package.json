@@ -2,10 +2,10 @@
   "name": "steam-viewer-backend",
   "version": "1.0.0",
   "description": "Just a server to make calls to the steam api",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node --watch server.js"
+    "server": "nodemon"
   },
   "author": "rhs",
   "license": "ISC",

@@ -8,8 +8,8 @@ dotenv.config();
 
 app.set("port", 5000);
 
-const gameInfoService = "http://localhost:5001/getGameInfo";
-const playerInfoService = "http://localhost:5002/getPlayerInfo";
+const gameInfoService = `http://gameinfoservice:5001/getGameInfo`;
+const playerInfoService = `http://playerinfoservice:5002/getPlayerInfo`;
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -29,9 +29,9 @@ app.get("/player/:id", async function (req, res) {
   try {
     const [playerDetails] = await Promise.allSettled([
       axios.get(`${playerInfoService}/${req.params.id}`),
-      //  axios.get(`${gameInfoService}/${req.params.id}/players`),
+      axios.get(`${gameInfoService}/${req.params.id}/players`),
     ]);
-    const data = playerDetails.value.data;
+    const data = playerDetails;
     console.log("BONGsss: ", data);
     res.send(data);
   } catch (err) {
@@ -88,6 +88,7 @@ app.get("/aggregateGameInfo/:id", async (req, res) => {
       axios.get(`${gameInfoService}/${req.params.id}`),
       axios.get(`${gameInfoService}/${req.params.id}/players`),
     ]);
+    console.log("what", gameInfo);
 
     const result = {
       ...gameInfo.value.data,
@@ -111,7 +112,7 @@ app.get("/:name", (req, res) => {
 
 app.listen(app.get("port"), function () {
   console.log(
-    "Express started on http://localhost:" +
+    `Express started on ${process.env.SERVER_API_BASE_DOMAIN}` +
       app.get("port") +
       "; press Ctrl-C to terminate.",
   );
