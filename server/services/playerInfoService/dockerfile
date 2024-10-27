@@ -1,4 +1,5 @@
 FROM node:19
+ENV API_KEY=87CE6665185863997A652C536B84B4FC
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install

@@ -13,12 +13,12 @@ export const SearchUser = () => {
   const handleSubmit = async (value) => {
     setLoading(() => true);
     try {
-      const getPlayer = await fetch(`http://localhost:5000/player/${ value }`);
+      const getPlayer = await fetch(`${ import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/player/${ value }`);
       // const getFriends = await fetch(`http://localhost:5000/getFriends/${ value }`)
       const data = await getPlayer.json();
       // const friendsData = await getFriends.json()
       console.log('DAAA: ', data)
-      setUserData(() => data.response.players[0]);
+      setUserData(() => ({ player: data.players[0], friendsList: data.friends }));
       setUserName(() => "");
     } catch (error: unknown) {
       if (error instanceof Error) setErrorMsg(() => error?.message);

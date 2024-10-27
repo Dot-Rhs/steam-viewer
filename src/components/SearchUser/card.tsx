@@ -1,6 +1,7 @@
 // import { IProfile } from "../../interfaces/IProfile";
 
 import { ShortDate } from "../ShortDate";
+import { FriendsList } from "./FriendsList";
 import { PersonaState } from "./PersonaState";
 
 // interface IProps {
@@ -10,7 +11,7 @@ import { PersonaState } from "./PersonaState";
 export const Card = ({ user }) => {
   const {
     steamid, communityvisibilitystate, profilestate, personaname, profileurl, avatar, avatarmedium, avatarfull, hash, personastate, realname, primaryclanid, timecreated, personastateflags, loccountrycode, locstatecode, loccityid, lastlogoff, gameid, gameextrainfo,
-  } = user;
+  } = user.player;
 
   const createdDate = new Date(timecreated * 1000);
   const lastLogOff = new Date(lastlogoff * 1000)
@@ -40,6 +41,7 @@ export const Card = ({ user }) => {
         </div>
       </div>
       <div className="profile-info">
+        <FriendsList friends={user.friendsList} />
       </div>
     </div>
   );

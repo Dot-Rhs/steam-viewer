@@ -55,3 +55,21 @@ services:
             - node_modules/
         - action: rebuild
           path: package.json
+
+  steamviewer:      
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3001
+    depends_on:
+      - server
+    develop:
+      watch:
+        - action: sync
+          path: ./server
+          target: /usr/src/app/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json

@@ -8,8 +8,10 @@ dotenv.config();
 
 app.set("port", 5000);
 
-const gameInfoService = `http://gameinfoservice:5001/getGameInfo`;
-const playerInfoService = `http://playerinfoservice:5002/getPlayerInfo`;
+// const gameInfoService = `http://gameinfoservice:5001/getGameInfo`;
+// const playerInfoService = `http://playerinfoservice:5002/getPlayerInfo`;
+const gameInfoService = `${process.env.GAMES_API_BASE_DOMAIN}/getGameInfo`;
+const playerInfoService = `${process.env.PLAYERS_API_BASE_DOMAIN}/getPlayerInfo`;
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -21,18 +23,34 @@ app.use(function (req, res, next) {
 });
 
 app.use((req, res, next) => {
-  console.log("incoming request: " + req.method + " " + req.url);
+  console.log(
+    "incoming request: " + req.method + " " + req.url,
+    gameInfoService,
+    playerInfoService,
+  );
   next();
 });
 
 app.get("/player/:id", async function (req, res) {
+  console.log("hello");
+
   try {
-    const [playerDetails] = await Promise.allSettled([
-      axios.get(`${playerInfoService}/${req.params.id}`),
-      axios.get(`${gameInfoService}/${req.params.id}/players`),
-    ]);
-    const data = playerDetails;
-    console.log("BONGsss: ", data);
+    const [playerDetails, friendsList, ownedGames, recentlyPlayed] =
+      await Promise.allSettled([
+        axios.get(`${playerInfoService}/${req.params.id}`),
+        axios.get(`${playerInfoService}/${req.params.id}/friends`),
+        axios.get(`${playerInfoService}/${req.params.id}/ownedGames`),
+        axios.get(`${playerInfoService}/${req.params.id}/recentlyPlayed`),
+      ]);
+
+    console.log("BONGssss: ");
+
+    const data = {
+      ...playerDetails.value.data,
+      ...friendsList.value.data,
+      ownedGames: ownedGames.value.data,
+      recentlyPlayed: recentlyPlayed.value.data,
+    };
     res.send(data);
   } catch (err) {
     console.log("errororr: ", err);
@@ -43,19 +61,19 @@ app.get("/player/:id", async function (req, res) {
 });
 
 // Moving to service
-app.get("/gameInfo/:id", async (req, res) => {
-  try {
-    const response = await axios.get(
-      `http://store.steampowered.com/api/appdetails?appids=${req.params.id}`,
-    );
+// app.get("/gameInfo/:id", async (req, res) => {
+//   try {
+//     const response = await axios.get(
+//       `http://store.steampowered.com/api/appdetails?appids=${req.params.id}`,
+//     );
 
-    const data = response.data;
-    // console.log("in route: ", data);
-    res.send(data);
-  } catch (err) {
-    console.log("errororr: ", err);
-  }
-});
+//     const data = response.data;
+//     // console.log("in route: ", data);
+//     res.send(data);
+//   } catch (err) {
+//     console.log("errororr: ", err);
+//   }
+// });
 
 app.get("/getPlayer/friends/:id", async function (req, res) {
   try {
@@ -113,7 +131,7 @@ app.get("/:name", (req, res) => {
 app.listen(app.get("port"), function () {
   console.log(
     `Express started on ${process.env.SERVER_API_BASE_DOMAIN}` +
-      app.get("port") +
+      // app.get("port") +
       "; press Ctrl-C to terminate.",
   );
 });

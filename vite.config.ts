@@ -10,9 +10,10 @@ export default defineConfig({
   //     input: "./src/main.jsx",
   //   },
   // },
-  // server: {
-  //   proxy: {
-  //     "/api": "http://localhost:5000/", // the address that u serve in the backend
-  //   },
-  // },
+  server: {
+    // proxy: {
+    //   "/api": "http://localhost:5000/", // the address that u serve in the backend
+    // },
+    port: 3001,
+  },
 });

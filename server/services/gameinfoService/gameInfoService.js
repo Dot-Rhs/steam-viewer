@@ -1,8 +1,20 @@
 const express = require("express");
 const axios = require("axios");
+let dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
 const port = 5001;
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept",
+  );
+  next();
+});
 
 app.use((req, res, next) => {
   console.log(
@@ -28,9 +40,11 @@ app.get("/getGameInfo/:id", async (req, res) => {
 });
 
 app.get("/getGameInfo/:id/players", async (req, res) => {
+  console.log("BOOOOY: ");
+
   try {
     const response = await axios.get(
-      `http://api.steampowered.com//ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=${req.params.id}`,
+      `http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=${req.params.id}`,
     );
 
     const data = response.data.response;
@@ -43,5 +57,5 @@ app.get("/getGameInfo/:id/players", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`User service running on http://localhost:${port}`);
+  console.log(`Games service running on ${process.env.GAMES_API_BASE_DOMAIN}`);
 });
