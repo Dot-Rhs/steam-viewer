@@ -18,7 +18,7 @@ export const SearchUser = () => {
       const data = await getPlayer.json();
       // const friendsData = await getFriends.json()
       console.log('DAAA: ', data)
-      setUserData(() => ({ player: data.players[0], friendsList: data.friends }));
+      setUserData(() => ({ player: data.players[0], friendsList: data.friends, gamesList: data.ownedGames, recentlyPlayed: data.recentlyPlayed }));
       setUserName(() => "");
     } catch (error: unknown) {
       if (error instanceof Error) setErrorMsg(() => error?.message);

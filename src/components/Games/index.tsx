@@ -60,10 +60,10 @@ export const Games = () => {
             {appId &&
                 (!loading || errorMsg) ? (
                 <TabList activeTabIndex={0}>
-                    <TabItem label='Info Tab'>
+                    <TabItem label='Info Tab' className='games-panel' >
                         <InfoPanel appId={appId} />
                     </TabItem >
-                    <TabItem label='News Tab'>
+                    <TabItem label='News Tab' className='news-panel'>
                         <News appId={appId} />
                     </TabItem >
                 </TabList >) : null

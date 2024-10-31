@@ -5,9 +5,9 @@ import './styles.css'
 
 
 
-const TabItem: React.FC<TabItemProps> = ({ label, children }) => (
+const TabItem: React.FC<TabItemProps> = ({ label, children, className }) => (
     <div
-        className={`tab-panel`}
+        className={`${ className ? className : 'tab-panel' }`}
         role="tabpanel"
         aria-labelledby={`tab-${ sanitizeForId(label) }`}
         id={`panel-${ sanitizeForId(label) }`}

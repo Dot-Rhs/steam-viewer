@@ -2,6 +2,7 @@
 
 import { ShortDate } from "../ShortDate";
 import { FriendsList } from "./FriendsList";
+import { GamesList } from "./GamesList";
 import { PersonaState } from "./PersonaState";
 
 // interface IProps {
@@ -15,7 +16,7 @@ export const Card = ({ user }) => {
 
   const createdDate = new Date(timecreated * 1000);
   const lastLogOff = new Date(lastlogoff * 1000)
-  console.log('JOHNOSN: ', steamid, communityvisibilitystate, profilestate, personaname, profileurl, avatar, avatarmedium, avatarfull, hash, personastate, realname, primaryclanid, timecreated, personastateflags, loccountrycode, locstatecode, loccityid, lastlogoff, gameid, gameextrainfo,);
+  console.log('JOHNOSN: ', user);
 
   return (
     <div className="user">
@@ -40,9 +41,17 @@ export const Card = ({ user }) => {
           <PersonaState state={personastate} />
         </div>
       </div>
-      <div className="profile-info">
+      <h2>Friends List</h2>
+      <div className="friends-info">
         <FriendsList friends={user.friendsList} />
       </div>
+
+
+      {<div className="friends-info">
+        <GamesList gamesList={user.gamesList} />
+        {/* <FriendsList friends={user.friendsList} /> */}
+      </div>}
+
     </div>
   );
 };
