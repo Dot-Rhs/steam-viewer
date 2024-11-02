@@ -4,6 +4,7 @@ import { ShortDate } from "../ShortDate";
 import { FriendsList } from "./FriendsList";
 import { GamesList } from "./GamesList";
 import { PersonaState } from "./PersonaState";
+import { RecentlyPlayedList } from "./RecentlyPlayedList";
 
 // interface IProps {
 //   user: IProfile;
@@ -46,11 +47,16 @@ export const Card = ({ user }) => {
         <FriendsList friends={user.friendsList} />
       </div>
 
-
-      {<div className="friends-info">
+      <h2>{user.player.personaname}'s Games</h2>
+      <div className="games-info">
         <GamesList gamesList={user.gamesList} />
         {/* <FriendsList friends={user.friendsList} /> */}
-      </div>}
+      </div>
+      <h2>Recently Played</h2>
+      <div className="games-info">
+        <RecentlyPlayedList gamesList={user.recentlyPlayed} />
+        {/* <FriendsList friends={user.friendsList} /> */}
+      </div>
 
     </div>
   );

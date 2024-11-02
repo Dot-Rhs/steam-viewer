@@ -1,7 +1,7 @@
 // import { IProfile } from "../../interfaces/IProfile";
 import parse from 'html-react-parser';
 import { ShortDate } from '../../ShortDate';
-import { IGameInfo } from '../interfaces';
+import { IGameInfo } from '../../../interfaces';
 
 import './styles.css'
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card } from "./card"
-import { IGameInfo } from "../interfaces";
+import { IGameInfo } from "../../../interfaces";
 
 export const InfoPanel = ({ appId }) => {
     const [gameInfo, setGameInfo] = useState<IGameInfo | null>(null);

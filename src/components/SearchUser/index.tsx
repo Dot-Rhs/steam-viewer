@@ -3,23 +3,21 @@ import { Card } from "./card";
 // import { IProfile } from "../../interfaces/IProfile";
 import "./styles.css";
 import { SearchBar } from "../SearchBar";
+import { IUserData, IUserResponse } from "../../interfaces";
 
 export const SearchUser = () => {
-  const [userName, setUserName] = useState("");
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<IUserData | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (value) => {
+  const handleSubmit = async (value: string) => {
     setLoading(() => true);
     try {
       const getPlayer = await fetch(`${ import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/player/${ value }`);
-      // const getFriends = await fetch(`http://localhost:5000/getFriends/${ value }`)
-      const data = await getPlayer.json();
-      // const friendsData = await getFriends.json()
-      console.log('DAAA: ', data)
+
+      const data = await getPlayer.json() as IUserResponse
+
       setUserData(() => ({ player: data.players[0], friendsList: data.friends, gamesList: data.ownedGames, recentlyPlayed: data.recentlyPlayed }));
-      setUserName(() => "");
     } catch (error: unknown) {
       if (error instanceof Error) setErrorMsg(() => error?.message);
     }
@@ -29,17 +27,6 @@ export const SearchUser = () => {
   return (
     <div className="profile-container">
       <SearchBar handleSubmit={handleSubmit} placeHolder={"Enter Steam ID for player..."} name='search-by-player-id' />
-      {/* <div className="input-wrapper">
-        <input
-          name="search-by-name"
-          type="text"
-          placeholder="Enter Steam ID for player..."
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-        />
-        <button onClick={handleSubmit}>Search</button>
-      </div> */}
 
       {loading && <h2>Loading...</h2>}
       {errorMsg && <h2>{errorMsg}</h2>}

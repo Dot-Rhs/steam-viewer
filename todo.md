@@ -6,3 +6,5 @@
 - get Player bans
 - GetAppList
 - Move to docker
+
+- add hover modal for user games list etc

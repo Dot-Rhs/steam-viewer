@@ -1,100 +1,93 @@
 import { useEffect, useRef, useState } from "react"
+import { IGameDetailed, IGameInfo, IOwnedGame, IPlayerGames } from "../../../interfaces";
 
-export const GamesList = ({ gamesList }) => {
-    const [gameData, setGameData] = useState({ games: [] });
+interface IProps {
+    gamesList: IPlayerGames
+}
+interface IGameData {
+    games: IGameDetailed[]
+}
+
+const defaultCount = 10
+
+export const GamesList = ({ gamesList }: IProps) => {
+    const [gameData, setGameData] = useState<IGameData>({ games: [] });
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [count, setCount] = useState<number>(10)
+    const [count, setCount] = useState<number>(defaultCount)
     const [loading, setLoading] = useState(false);
+
+    const batchDelayFetch = async (abortSignal: AbortSignal) => {
+        setLoading(() => true)
+
+        let i = 0
+
+        const temp: IOwnedGame[] = gamesList.games.slice(count - defaultCount, count)
+
+        while (i <= count) {
+            for (let j = 0; j < 3; j++) {
+                const tempGame = temp[i]
+
+                if (tempGame) {
+                    try {
+                        const response = await fetch(`${ import.meta.env.VITE_LOCAL_GAMES_API_BASE_DOMAIN }/getGameInfo/${ tempGame.appid }`, { signal: abortSignal })
+
+                        const responseData = await response.json()
+
+                        if (responseData?.success
+                            && responseData?.data) {
+                            setGameData((prev) => ({ games: [...prev.games, responseData.data] }))
+                        }
+                    } catch (error) {
+                        if (abortSignal.aborted) return
+
+                        if (error instanceof Error) setErrorMsg(() => error?.message);
+                    }
+                }
+                i = i + 1
+            }
+            await new Promise(ok => setTimeout(ok, 400));
+        }
+
+        setLoading(() => false)
+    }
 
     useEffect(() => {
         const abortController = new AbortController();
+
         const handleFetch = async () => {
-
-            let i = count - 10
-            setLoading(() => true);
-
-
-
-            let temp = gamesList.games.slice(count - 10, count)
-            console.log('GAAAMES: ', abortController);
-            while (i <= count) {
-
-                let results = [];
-                let batch = [];
-                for (let j = 0; j < 3; j++) {
-                    let thisParam = temp.pop();
-                    if (thisParam) {
-                        try {
-                            const response = await fetch(`${ import.meta.env.VITE_LOCAL_GAMES_API_BASE_DOMAIN }/getGameInfo/${ thisParam.appid }`, { signal: abortController.signal })
-
-
-                            const responseData = await response.json()
-
-                            if (responseData.success) {
-                                let old = [...batch]
-                                console.log('GARBALDI: ', responseData);
-
-                                batch.push(responseData.data);
-                            }
-
-                        } catch (error) {
-                            console.log('ABORT: ', abortController);
-                            if (abortController.signal.aborted) return
-
-                            if (error instanceof Error) setErrorMsg(() => error?.message);
-                        }
-                    }
-                    i = i + j
-                }
-                let old = [...results]
-                results = results.concat(await Promise.allSettled(batch));
-                const newGamesList = results.map(item => item.value)
-
-                console.log('GARAGE: ', await newGamesList, i)
-                if (newGamesList.length) {
-
-                    setGameData((prev) => ({ games: [...prev.games, ...newGamesList] }))
-                }
-                await new Promise(ok => setTimeout(ok, 400));
-
-                // results = results.map(item => item.value)
-            }
-
-
-            setLoading(() => false);
-            // return results;
-            // }
-
+            await batchDelayFetch(abortController.signal)
         };
 
-        if ((gamesList?.games?.length)) {
+        if ((gamesList?.games?.length && count === defaultCount)) {
             handleFetch()
         }
 
-        if (count > 10) {
-
+        if (count > defaultCount) {
             handleFetch()
         }
 
         return () => {
-            console.log('Cleanup: ')
             return abortController.abort()
         }
 
     }, [count])
 
-    // console.log('FRIENDS: ', games)
-
     return (
         <>
-            {!!gameData?.games?.length ? gameData.games.map((game, idx) => (<div key={`${ idx }gamep-appid${ game.steam_appid }`}>
-                <img src={game.capsule_imagev5} alt={`${ game.name } image`} key={`${ idx }image-appid${ game.steam_appid }`} />
-                {/* <p>
-                {friend.personaname}
-                </p> */}
-            </div>)) : null}
-            <button onClick={() => setCount((prev) => prev + 10)
-            }>Load More...</button>
+            {gameData?.games?.length ? gameData.games.map((game, idx) => (
+                <div key={`${ idx }gamep-appid${ game.steam_appid }`}>
+                    <img src={game.capsule_image} alt={`${ game.name } image`} key={`${ idx }image-appid${ game.steam_appid }`} />
+                </div>)) : null}
+            <div>
+                {loading ? <p>Loading...</p> : null}
+                {!loading && count < gamesList.games.length ?
+                    <>
+                        <p>...{gamesList.games.length - gameData.games.length} more</p>
+                        <button onClick={() => setCount((prev) => prev + defaultCount)
+                        }>Load More</button>
+                    </>
+                    : null}
+            </div>
         </>
 
     )
