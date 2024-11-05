@@ -87,6 +87,10 @@
   max-width: 100%;
 }
 
+.friends-info div:last-child {
+  grid-column: span 4;
+}
+
 .games-info {
   display: grid;
   grid-template-columns: 1fr repeat(1, 1fr);

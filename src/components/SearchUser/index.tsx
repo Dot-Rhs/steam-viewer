@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card } from "./card";
+import { PersonaCard } from "./card";
 // import { IProfile } from "../../interfaces/IProfile";
 import "./styles.css";
 import { SearchBar } from "../SearchBar";
@@ -31,7 +31,7 @@ export const SearchUser = () => {
       {loading && <h2>Loading...</h2>}
       {errorMsg && <h2>{errorMsg}</h2>}
       {userData !== null && (!loading || errorMsg) ? (
-        <Card user={userData} />
+        <PersonaCard player={userData.player} gamesList={userData.gamesList} friendsList={userData.friendsList} recentlyPlayed={userData.recentlyPlayed} />
       ) : null}
     </div>
   );

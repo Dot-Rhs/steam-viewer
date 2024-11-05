@@ -71,11 +71,11 @@ export interface IUserData {
 export interface IFriendsData {
   friend_since: number;
   relationship: string;
-  steamid: string | number;
+  steamid: number;
 }
 
 export interface IPlayerInfo {
-  steamid: string;
+  steamid: number;
   communityvisibilitystate: number;
   profilestate: number;
   personaname: string;

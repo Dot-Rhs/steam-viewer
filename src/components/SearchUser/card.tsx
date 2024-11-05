@@ -1,23 +1,25 @@
 // import { IProfile } from "../../interfaces/IProfile";
 
+import { IFriendsData, IGameDetailed, IGameInfo, IPlayerGames, IPlayerInfo, IRecentlyPlayed } from "../../interfaces";
 import { ShortDate } from "../ShortDate";
 import { FriendsList } from "./FriendsList";
 import { GamesList } from "./GamesList";
 import { PersonaState } from "./PersonaState";
 import { RecentlyPlayedList } from "./RecentlyPlayedList";
 
-// interface IProps {
-//   user: IProfile;
-// }
+interface IProps {
+  player: IPlayerInfo;
+  friendsList?: IFriendsData[];
+  gamesList?: IPlayerGames;
+  recentlyPlayed?: IRecentlyPlayed
+}
 
-export const Card = ({ user }) => {
+export const PersonaCard = ({ player, friendsList, gamesList, recentlyPlayed }: IProps) => {
   const {
-    steamid, communityvisibilitystate, profilestate, personaname, profileurl, avatar, avatarmedium, avatarfull, hash, personastate, realname, primaryclanid, timecreated, personastateflags, loccountrycode, locstatecode, loccityid, lastlogoff, gameid, gameextrainfo,
-  } = user.player;
+    steamid, communityvisibilitystate, personaname, profileurl, avatarfull, personastate, realname, timecreated, lastlogoff
+  } = player;
 
-  const createdDate = new Date(timecreated * 1000);
-  const lastLogOff = new Date(lastlogoff * 1000)
-  console.log('JOHNOSN: ', user);
+  console.log('JOHNOSN: ', player);
 
   return (
     <div className="user">
@@ -31,10 +33,10 @@ export const Card = ({ user }) => {
           </p>
           }
           <p>Steam ID: {steamid}</p>
-          <p>
+          {communityvisibilitystate === 3 && <p>
             User joined on {" "}
             <ShortDate time={timecreated} />
-          </p>
+          </p>}
           <p>
             User last logged off {" "}
             <ShortDate time={lastlogoff} />
@@ -42,21 +44,32 @@ export const Card = ({ user }) => {
           <PersonaState state={personastate} />
         </div>
       </div>
-      <h2>Friends List</h2>
-      <div className="friends-info">
-        <FriendsList friends={user.friendsList} />
-      </div>
+      {friendsList?.length ?
+        <>
+          <h2>Friends List</h2>
+          <div className="friends-info">
+            <FriendsList friends={friendsList} />
+          </div>
+        </>
+        : null}
 
-      <h2>{user.player.personaname}'s Games</h2>
-      <div className="games-info">
-        <GamesList gamesList={user.gamesList} />
-        {/* <FriendsList friends={user.friendsList} /> */}
-      </div>
-      <h2>Recently Played</h2>
-      <div className="games-info">
-        <RecentlyPlayedList gamesList={user.recentlyPlayed} />
-        {/* <FriendsList friends={user.friendsList} /> */}
-      </div>
+      {gamesList &&
+        <>
+          <h2>{personaname}'s Games</h2>
+          <div className="games-info">
+            <GamesList gamesList={gamesList} />
+            {/* <FriendsList friends={friendsList} /> */}
+          </div>
+        </>
+      }
+      {recentlyPlayed &&
+        <>
+          <h2>Recently Played</h2>
+          <div className="games-info">
+            <RecentlyPlayedList gamesList={recentlyPlayed} />
+            {/* <FriendsList friends={friendsList} /> */}
+          </div>
+        </>}
 
     </div>
   );
