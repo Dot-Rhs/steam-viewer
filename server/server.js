@@ -3,6 +3,7 @@ let express = require("express");
 let dotenv = require("dotenv");
 let axios = require("axios");
 let app = express();
+let handleStats = require("./helpers/handleStats.js");
 
 dotenv.config();
 
@@ -42,8 +43,6 @@ app.get("/player/:id", async function (req, res) {
         axios.get(`${playerInfoService}/${req.params.id}/ownedGames`),
         axios.get(`${playerInfoService}/${req.params.id}/recentlyPlayed`),
       ]);
-
-    console.log("BONGssss: ");
 
     const data = {
       ...playerDetails.value.data,
@@ -106,20 +105,53 @@ app.get("/aggregateGameInfo/:id", async (req, res) => {
       axios.get(`${gameInfoService}/${req.params.id}`),
       axios.get(`${gameInfoService}/${req.params.id}/players`),
     ]);
-    console.log("what", gameInfo);
 
-    const result = {
-      ...gameInfo.value.data,
-      data: {
-        ...gameInfo.value.data.data,
-        currentPlayers: currentPlayers.value.data?.player_count || null,
-      },
-    };
-    console.log("RESSS: ", result);
+    let result = {};
+
+    if ("value" in gameInfo && "value" in currentPlayers) {
+      result = {
+        ...gameInfo.value.data,
+        data: {
+          ...gameInfo.value.data.data,
+          currentPlayers: currentPlayers.value.data?.player_count || null,
+        },
+      };
+    }
 
     res.send(result);
   } catch (error) {
     res.status(500).send(error.message);
+  }
+});
+
+app.get("/getUserGameStats/:id/:appid", async (req, res) => {
+  let result = {
+    achievements: [],
+    stats: [],
+  };
+
+  try {
+    const [gameInfo, playerStats] = await Promise.allSettled([
+      axios.get(`${gameInfoService}/${req.params.appid}/gameStats`),
+      axios.get(
+        `${playerInfoService}/${req.params.id}/gameStats/${req.params.appid}`,
+      ),
+    ]);
+
+    if ("value" in playerStats && "value" in gameInfo) {
+      const [aggregatedAchievements, aggregatedStats] = handleStats(
+        gameInfo,
+        playerStats,
+      );
+
+      result = {
+        achievements: aggregatedAchievements,
+        stats: aggregatedStats,
+      };
+      res.send(result);
+    }
+  } catch (error) {
+    res.status(404).send(result);
   }
 });
 

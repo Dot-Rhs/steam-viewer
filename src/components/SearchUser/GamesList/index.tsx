@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import { IGameDetailed, IGameInfo, IOwnedGame, IPlayerGames } from "../../../interfaces";
+import { GameInfo } from "./GameInfo";
 
 interface IProps {
     gamesList: IPlayerGames
+    userId: number;
 }
 interface IGameData {
     games: IGameDetailed[]
@@ -10,7 +12,7 @@ interface IGameData {
 
 const defaultCount = 10
 
-export const GamesList = ({ gamesList }: IProps) => {
+export const GamesList = ({ gamesList, userId }: IProps) => {
     const [gameData, setGameData] = useState<IGameData>({ games: [] });
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [count, setCount] = useState<number>(defaultCount)
@@ -72,12 +74,12 @@ export const GamesList = ({ gamesList }: IProps) => {
 
     }, [count])
 
+    // Just do achievements for now
+
     return (
         <>
             {gameData?.games?.length ? gameData.games.map((game, idx) => (
-                <div key={`${ idx }gamep-appid${ game.steam_appid }`}>
-                    <img src={game.capsule_image} alt={`${ game.name } image`} key={`${ idx }image-appid${ game.steam_appid }`} />
-                </div>)) : null}
+                <GameInfo gameData={game} userId={userId} key={idx + game.steam_appid} />)) : null}
             <div>
                 {loading ? <p>Loading...</p> : null}
                 {!loading && count < gamesList.games.length ?
@@ -89,6 +91,5 @@ export const GamesList = ({ gamesList }: IProps) => {
                     : null}
             </div>
         </>
-
     )
 }

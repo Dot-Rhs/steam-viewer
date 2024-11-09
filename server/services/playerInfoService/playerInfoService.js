@@ -68,6 +68,22 @@ app.get("/getPlayerInfo/:id/ownedGames", async (req, res) => {
   }
 });
 
+app.get("/getPlayerInfo/:id/gameStats/:appid", async (req, res) => {
+  try {
+    const response = await axios.get(
+      `https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?key=${process.env.API_KEY}&appid=${req.params.appid}&steamid=${req.params.id}`,
+    );
+
+    const data = (await response.data) || {};
+
+    console.log("GAME STATS: ", data);
+    res.send(data);
+  } catch (err) {
+    console.log("errororr: ", err);
+    res.send({});
+  }
+});
+
 app.get("/getPlayerInfo/:id/recentlyPlayed", async (req, res) => {
   try {
     const response = await axios.get(
@@ -104,23 +120,22 @@ app.get("/getPlayerInfo/:id/recentlyPlayed", async (req, res) => {
   }
 });
 
-app.get("/getPlayerInfo/:id/gameStats/:appid", async (req, res) => {
-  try {
-    const response = await axios.get(
-      `http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=${req.params.appid}&key=${process.env.API_KEY}&steamid=${req.params.id}`,
-    );
+// app.get("/getPlayerInfo/:id/gameStats/:appid", async (req, res) => {
+//   console.log("GAME STATS FOR USER: ", req.params);
+//   try {
+//     const response = await axios.get(
+//       `http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=${req.params.appid}&key=${process.env.API_KEY}&steamid=${req.params.id}`,
+//     );
+//     const data = response.data;
+//     // success res = { playerstats: steamID: '', gameName: '', stats: {name: '', value: num }[] achievements: {name: '', achieved: num }[]}
+//     console.log("DAAAATAL: ", data);
 
-    const data = response.data;
-
-    // success res = { playerstats: steamID: '', gameName: '', stats: {name: '', value: num }[] achievements: {name: '', achieved: num }[]}
-
-    console.log("GAME STATS FOR USER: ", data);
-    res.send(data);
-  } catch (err) {
-    console.log("errororr: ", err);
-    res.status(500).send({ err: err.message, params: req.params });
-  }
-});
+//     res.send(data);
+//   } catch (err) {
+//     console.log("errororr: ", err);
+//     res.status(500).send({ err: err.message, params: req.params });
+//   }
+// });
 
 app.get("/getPlayerInfo/:id/gameAchievements/:appid", async (req, res) => {
   try {
@@ -142,5 +157,7 @@ app.get("/getPlayerInfo/:id/gameAchievements/:appid", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`User service running on ${process.env.PLAYERS_API_BASE_DOMAIN}`);
+  console.log(
+    `Player service running on ${process.env.PLAYERS_API_BASE_DOMAIN}`,
+  );
 });

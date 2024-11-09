@@ -39,6 +39,22 @@ app.get("/getGameInfo/:id", async (req, res) => {
   }
 });
 
+app.get("/getGameInfo/:id/gameStats", async (req, res) => {
+  try {
+    const response = await axios.get(
+      `https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=${process.env.API_KEY}&appid=${req.params.id}`,
+    );
+
+    // console.log("hello: ", await response);
+    const data = response.data;
+
+    res.json(data);
+  } catch (err) {
+    console.log("errororr: ", err);
+    res.status(500).send(err.message);
+  }
+});
+
 app.get("/getGameInfo/:id/players", async (req, res) => {
   console.log("BOOOOY: ");
 

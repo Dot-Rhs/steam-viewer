@@ -57,7 +57,7 @@ export const PersonaCard = ({ player, friendsList, gamesList, recentlyPlayed }: 
         <>
           <h2>{personaname}'s Games</h2>
           <div className="games-info">
-            <GamesList gamesList={gamesList} />
+            <GamesList gamesList={gamesList} userId={player.steamid} />
             {/* <FriendsList friends={friendsList} /> */}
           </div>
         </>

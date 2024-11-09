@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { useClickOutside } from "../useClickOutside";
 import "./styles.css";
 
 interface IProps {
@@ -15,11 +17,14 @@ export const Modal = ({
   footer,
   closeModal
 }: IProps) => {
+  const modalRef = useRef(null)
+  useClickOutside(modalRef, closeModal)
+
   return (
     <div id={id ?? "Modal"} className="modal">
-      <div className="modal-content">
+      <div className="modal-content" ref={modalRef}>
 
-        <span className="close-modal-icon" onClick={closeModal}>
+        <span className="close-modal-icon" onClick={closeModal} >
           &times;
         </span>
         {header && <div className="header">

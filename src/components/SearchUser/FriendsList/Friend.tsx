@@ -11,30 +11,20 @@ interface IProps {
 }
 
 export const Friend = ({ data }: IProps) => {
-    const friendRef = useRef(null)
     const [openModal, setOpenModal] = useState(false);
-    useClickOutside(friendRef, () => setOpenModal(() => false))
 
-    console.log('DAAATAAA: ', data);
-
-    const { personaname, avatarfull, steamid, friend_since, communityvisibilitystate, profileurl, personastate } = data
+    const { personaname, avatarfull } = data
 
     return (
         <>
-            <div ref={friendRef}>
+            <div style={{ cursor: "pointer" }}>
                 <img src={avatarfull} alt={`${ personaname } avatar`} onClick={() => setOpenModal(() => true)} />
             </div>
 
             {
                 openModal ? (
                     <Modal
-                        id="A-VERY-UNIQUE-MODAL"
-                        // footer={
-                        //     <div>
-                        //         <p>A FOOTY ASS FOOTER</p>
-                        //     </div>
-                        // }
-                        // header={personaname}
+                        id="player-modal"
                         body={<PersonaCard player={data} />
                         }
                         closeModal={() => setOpenModal(() => false)}
