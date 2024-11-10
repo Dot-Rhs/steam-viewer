@@ -17,7 +17,7 @@
     position: absolute;
     border-radius: 4px;
     left: 50%;
-    transform: translateX(-50%);
+    /* transform: translateX(-50%); */
     padding: 6px;
     color: var(--tooltip-text-color);
     background: var(--tooltip-background-color);
@@ -25,7 +25,7 @@
     font-family: sans-serif;
     line-height: 1;
     z-index: 100;
-    white-space: nowrap;
+    width: 240px;
 }
 
 /* CSS border triangles */
@@ -61,7 +61,7 @@
 
 /* CSS border triangles */
 .Tooltip-Tip.right::before {
-    left: calc(var(--tooltip-arrow-size) * -1);
+    left: calc(var(--tooltip-arrow-size) * 2);
     top: 50%;
     transform: translateX(0) translateY(-50%);
     border-right-color: var(--tooltip-background-color);
@@ -93,4 +93,12 @@
     top: 50%;
     transform: translateX(0) translateY(-50%);
     border-left-color: var(--tooltip-background-color);
+}
+
+@media only screen and (max-device-width: 1024px),
+(max-width: 1024px) {
+    .Tooltip-Tip.top {
+        top: calc(var(--tooltip-margin) * -1.6);
+        transform: translateX(-50%) translateY(-60%)
+    }
 }

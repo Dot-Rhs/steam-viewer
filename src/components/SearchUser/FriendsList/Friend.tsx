@@ -18,7 +18,7 @@ export const Friend = ({ data }: IProps) => {
     return (
         <>
             <div style={{ cursor: "pointer" }}>
-                <img src={avatarfull} alt={`${ personaname } avatar`} onClick={() => setOpenModal(() => true)} />
+                <img src={avatarfull} alt={`${ personaname } avatar`} onClick={() => setOpenModal(() => true)} className="info-image" />
             </div>
 
             {

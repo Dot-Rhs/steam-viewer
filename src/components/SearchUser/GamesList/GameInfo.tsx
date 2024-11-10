@@ -11,7 +11,11 @@ interface IProps {
 
 
 export const GameInfo = ({ gameData, userId }: IProps) => {
-    const [info, setInfo] = useState()
+    const [info, setInfo] = useState({
+        achievements: {
+            achieved: [], unachieved: []
+        }, stats: []
+    })
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [openModal, setOpenModal] = useState(false)
@@ -47,42 +51,49 @@ export const GameInfo = ({ gameData, userId }: IProps) => {
     }, [openModal])
 
     const ModalBody = () => {
+        const { achievements, stats } = info
+        const { achieved, unachieved } = achievements
+
         if (loading) return (<p>Loading User Stats...</p>)
         if (errorMsg) return (<p>{errorMsg}</p>)
 
         return (
             <div>
-                <div><h2>
+                {(achieved?.length || unachieved?.length) ? (<div><h2>
                     Achievements
                 </h2>
                     <div className='achievements-list'>
-                        {info?.achievements?.achieved?.map(item => <Tooltip content={`${ item.displayName } Achieved`}>
-                            <img src={item.icon} alt={`${ item.displayName } Achieved`}></img>
+                        {achieved?.map(item => <Tooltip content={<><p><b>{item.displayName} Achieved</b></p>
+                            <p className="description"><i>{item.description}</i></p>
+                        </>}>
+                            <img src={item.icon} alt={`${ item.displayName } Achieved`} className="info-image"></img>
                         </Tooltip>
                         )}
-                        {info?.achievements?.unachieved?.map(item => <Tooltip content={`${ item.displayName } Unachieved`}>
-                            <img src={item.icon} alt={`${ item.displayName } Unachieved`}></img>
+                        {unachieved?.map(item => <Tooltip content={<><p><b>{item.displayName} Unachieved</b></p>
+                            <p className="description"><i>{item.description}</i></p>
+                        </>}>
+                            <img src={item.icon} alt={`${ item.displayName } Unachieved`} className="info-image"></img>
                         </Tooltip>
                         )}
                     </div>
 
-                </div>
-                <div><h2>Stats</h2>
-                    <div>
-                        {/* {info?.stats} */}
-                    </div>
-                </div>
+                </div>) : <p>No Achievement data available</p>}
+
+                {stats.length ?
+                    <div><h2>Stats</h2>
+                        <div className="stats-list">
+                            {stats.map(item => <p>{item.displayName}: <b>{item.value ?? 0}</b></p>)}
+                        </div>
+                    </div> : <p>No Stats data available</p>}
             </div>
         )
     }
 
-
     return (
         <>
             <div key={`gamep-appid${ gameData.steam_appid }`} >
-                <img src={gameData?.capsule_image} alt={`${ gameData.name } image`} key={`image-appid${ gameData.steam_appid }`} onClick={() => setOpenModal(() => true)} />
+                <img src={gameData?.capsule_image} alt={`${ gameData.name } image`} key={`image-appid${ gameData.steam_appid }`} onClick={() => setOpenModal(() => true)} className="info-image" />
             </div>
-
 
             {openModal ? (
                 <Modal
@@ -94,7 +105,5 @@ export const GameInfo = ({ gameData, userId }: IProps) => {
             ) : null}
 
         </>
-
-
     )
 }
