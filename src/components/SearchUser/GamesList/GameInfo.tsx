@@ -2,13 +2,16 @@ import { useEffect, useRef, useState } from "react"
 import { useClickOutside } from "../../useClickOutside"
 import { Modal } from "../../modal"
 import { IGameDetailed } from "../../../interfaces"
-import Tooltip from "../../Tooltip";
+import Tooltip from "../../Tooltip/Tooltip.tsx";
 
 interface IProps {
     gameData: IGameDetailed;
     userId: number;
 }
 
+// Get total num achievements 3/12 etc etc etc
+// Maybe global total if poss
+// Fix scroll issue with tooltip
 
 export const GameInfo = ({ gameData, userId }: IProps) => {
     const [info, setInfo] = useState({
@@ -32,15 +35,6 @@ export const GameInfo = ({ gameData, userId }: IProps) => {
                 console.log('what2: ', data);
 
                 setInfo(() => data)
-                // const friendsData = await getFriends.json()
-                // console.log('DAAA: ', contentRef.current.getBoundingClientRect().height)
-                // if (data.appnews.newsitems) {
-                //     setAppData((prev) => ({ newsitems: [...prev.newsitems, ...data.appnews.newsitems] }));
-                // }
-                // setAppId(() => val);
-
-                // if (tempHeight === null) return;
-                // setHeight(height === 0 ? tempHeight : 0);
             } catch (error: unknown) {
                 if (error instanceof Error) setErrorMsg(() => error?.message);
             }
@@ -48,7 +42,7 @@ export const GameInfo = ({ gameData, userId }: IProps) => {
         }
 
         if (openModal) fetchStats()
-    }, [openModal])
+    }, [openModal, gameData, userId])
 
     const ModalBody = () => {
         const { achievements, stats } = info
@@ -63,9 +57,10 @@ export const GameInfo = ({ gameData, userId }: IProps) => {
                     Achievements
                 </h2>
                     <div className='achievements-list'>
-                        {achieved?.map(item => <Tooltip content={<><p><b>{item.displayName} Achieved</b></p>
-                            <p className="description"><i>{item.description}</i></p>
-                        </>}>
+                        {achieved?.map(item => <Tooltip content={
+                            <><p><b>{item.displayName} Achieved</b></p>
+                                <p className="description"><i>{item.description}</i></p>
+                            </>}>
                             <img src={item.icon} alt={`${ item.displayName } Achieved`} className="info-image"></img>
                         </Tooltip>
                         )}
