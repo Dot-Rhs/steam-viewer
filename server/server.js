@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 
 app.get("/player/:id", async function (req, res) {
   console.log("hello");
-
+  // Owned Games has an iclude appinfo param -rework below, to get rid of extra call
   try {
     const [playerDetails, friendsList, ownedGames, recentlyPlayed] =
       await Promise.allSettled([

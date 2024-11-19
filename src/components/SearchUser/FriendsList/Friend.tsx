@@ -5,6 +5,7 @@ import { PersonaState } from "../PersonaState";
 import { useClickOutside } from "../../useClickOutside";
 import { IFriendsState } from ".";
 import { PersonaCard } from "../card";
+import { Tooltip } from "react-tooltip";
 
 interface IProps {
     data: IFriendsState
@@ -17,9 +18,16 @@ export const Friend = ({ data }: IProps) => {
 
     return (
         <>
-            <div style={{ cursor: "pointer" }}>
-                <img src={avatarfull} alt={`${ personaname } avatar`} onClick={() => setOpenModal(() => true)} className="info-image" />
-            </div>
+            <a data-tooltip-id={`${ personaname }-tooltip`} >
+
+                <div style={{ cursor: "pointer" }}>
+                    <img src={avatarfull} alt={`${ personaname } avatar`} onClick={() => setOpenModal(() => true)} className="info-image" />
+                </div>
+            </a>
+
+            <Tooltip id={`${ personaname }-tooltip`} offset={20}>
+                {personaname}
+            </Tooltip>
 
             {
                 openModal ? (

@@ -24,9 +24,9 @@ export const Modal = ({
     <div id={id ?? "Modal"} className="modal">
       <div className="modal-content" ref={modalRef}>
 
-        <span className="close-modal-icon" onClick={closeModal} >
+        {/* <span className="close-modal-icon" onClick={closeModal} >
           &times;
-        </span>
+        </span> */}
         {header && <div className="header">
           <h2>{header}</h2>
         </div>

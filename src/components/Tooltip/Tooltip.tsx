@@ -26,7 +26,7 @@ const Tooltip = (props: React.HTMLProps<HTMLDivElement> & TooltipProps) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             style={{
-                // position: 'relative',
+                position: 'relative',
                 display: 'flex', flexDirection:
                     'column', alignItems: 'center'
             }}>
@@ -46,7 +46,7 @@ const Tooltip = (props: React.HTMLProps<HTMLDivElement> & TooltipProps) => {
                         <div
                             style={{
                                 // whiteSpace: 'nowrap',
-                                background: 'black', fontSize: '11px', fontWeight: 400, letterSpacing: 0, lineHeight: '13px', color: 'white', width: '200px', wordWrap: 'break-word', padding: '0em 1em'
+                                background: 'black', fontSize: '11px', fontWeight: 400, letterSpacing: 0, lineHeight: '13px', color: 'white', width: '140px', wordWrap: 'break-word', padding: '0em 1em'
                             }}
                         >
                             {props.content}

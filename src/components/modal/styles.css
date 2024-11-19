@@ -1,13 +1,12 @@
 .modal {
   position: fixed;
   z-index: 1;
-  padding-top: 150px;
+  padding: 50px 0px;
   left: 0;
   top: 0;
   width: 100%;
-  height: 90%;
-  /* overflow: auto; */
-  /* background-color: #67e67c; */
+  height: 100%;
+  background-color: #00000099;
 }
 
 .modal-content {
@@ -17,10 +16,12 @@
   padding: 0;
   border: 1px solid var(--tab-border-color);
   box-shadow: #000 16px 18px;
-  width: 68%;
+  min-width: 300px;
   animation-name: animateModal;
-  animation-duration: 0.5s;
-  max-height: 100%;
+  animation-duration: .5s;
+  max-height: 90%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .close-modal-icon {
@@ -43,7 +44,7 @@
   padding: 20px 15px;
   color: #000;
   height: 100%;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 
 .footer {
@@ -54,12 +55,24 @@
 
 @keyframes animateModal {
   from {
-    top: -200px;
+    top: -600px;
     opacity: 0;
   }
 
   to {
     top: 0;
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .modal-content {
+    max-width: 92%;
+  }
+}
+
+@media only screen and (max-device-width: 1024px) {
+  .modal-content {
+    max-width: 92%;
   }
 }

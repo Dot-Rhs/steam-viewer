@@ -55,7 +55,7 @@ app.get("/getPlayerInfo/:id/friends", async (req, res) => {
 app.get("/getPlayerInfo/:id/ownedGames", async (req, res) => {
   try {
     const response = await axios.get(
-      `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.API_KEY}&steamid=${req.params.id}`,
+      `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.API_KEY}&steamid=${req.params.id}&include_appinfo=true`,
     );
 
     const data = response.data;

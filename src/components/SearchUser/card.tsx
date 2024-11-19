@@ -19,8 +19,6 @@ export const PersonaCard = ({ player, friendsList, gamesList, recentlyPlayed }: 
     steamid, communityvisibilitystate, personaname, profileurl, avatarfull, personastate, realname, timecreated, lastlogoff
   } = player;
 
-  console.log('JOHNOSN: ', player);
-
   return (
     <div className="user">
       <div className="name-container">
@@ -62,15 +60,6 @@ export const PersonaCard = ({ player, friendsList, gamesList, recentlyPlayed }: 
           </div>
         </>
       }
-      {recentlyPlayed &&
-        <>
-          <h2>Recently Played</h2>
-          <div className="games-info">
-            <RecentlyPlayedList gamesList={recentlyPlayed} />
-            {/* <FriendsList friends={friendsList} /> */}
-          </div>
-        </>}
-
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react"
-import { IGameDetailed, IGameInfo, IOwnedGame, IPlayerGames } from "../../../interfaces";
+import { useEffect, useState } from "react"
+import { IGameDetailed, IOwnedGame, IPlayerGames } from "../../../interfaces";
 import { GameInfo } from "./GameInfo";
 
 interface IProps {
@@ -74,12 +74,10 @@ export const GamesList = ({ gamesList, userId }: IProps) => {
 
     }, [count])
 
-    // Just do achievements for now
-
     return (
         <>
             {gameData?.games?.length ? gameData.games.map((game, idx) => (
-                <GameInfo gameData={game} userId={userId} key={idx + game.steam_appid} />)) : null}
+                <GameInfo gameData={game} userId={userId} key={idx + game.steam_appid} disabled={loading} />)) : null}
             <div>
                 {loading ? <p>Loading...</p> : null}
                 {!loading && count < gamesList.games.length ?
