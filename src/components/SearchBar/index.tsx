@@ -14,7 +14,7 @@ export const SearchBar = ({ handleSubmit, placeHolder, name }) => {
                 onChange={(e) => setValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSubmit(value)}
             />
-            <button onClick={() => handleSubmit(value)}>Search</button>
+            <button onClick={() => handleSubmit(value)} disabled={!value} >Search</button>
         </div>
     )
 }

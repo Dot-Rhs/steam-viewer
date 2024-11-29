@@ -24,6 +24,7 @@
     background-color: inherit;
     color: inherit;
     cursor: pointer;
+    transition: all 0.5s ease-in;
 }
 
 input:focus,
@@ -31,10 +32,16 @@ input:focus-visible {
     outline: none;
 }
 
+.input-wrapper button:disabled {
+    opacity: 0.5;
+    box-shadow: #000 0px 0px;
+    transition: all 0.5s ease-in;
+}
+
 @media only screen and (max-device-width: 550px) {
     /* .input-wrapper {
         width: 100%;
-    } */
+        } */
 
     .input-wrapper input {
         /* width: 50vw; */
