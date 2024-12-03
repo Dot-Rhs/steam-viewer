@@ -24,7 +24,6 @@ app.use((req, res, next) => {
 });
 
 app.get("/getGameInfo/:id", async (req, res) => {
-  console.log("hello: ");
   try {
     const response = await axios.get(
       `http://store.steampowered.com/api/appdetails?appids=${req.params.id}`,
@@ -45,7 +44,6 @@ app.get("/getGameInfo/:id/gameStats", async (req, res) => {
       `https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=${process.env.API_KEY}&appid=${req.params.id}`,
     );
 
-    // console.log("hello: ", await response);
     const data = response.data;
 
     res.json(data);
@@ -56,8 +54,6 @@ app.get("/getGameInfo/:id/gameStats", async (req, res) => {
 });
 
 app.get("/getGameInfo/:id/players", async (req, res) => {
-  console.log("BOOOOY: ");
-
   try {
     const response = await axios.get(
       `http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=${req.params.id}`,

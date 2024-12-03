@@ -9,10 +9,24 @@ dotenv.config();
 
 app.set("port", 5000);
 
-// const gameInfoService = `http://gameinfoservice:5001/getGameInfo`;
-// const playerInfoService = `http://playerinfoservice:5002/getPlayerInfo`;
-const gameInfoService = `${process.env.GAMES_API_BASE_DOMAIN}/getGameInfo`;
-const playerInfoService = `${process.env.PLAYERS_API_BASE_DOMAIN}/getPlayerInfo`;
+const headers = {
+  "Content-Security-Policy":
+    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
+  "Cross-Origin-Opener-Policy": "same-origin",
+  "Cross-Origin-Resource-Policy": "same-origin",
+  "Origin-Agent-Cluster": "?1",
+  "Referrer-Policy": "no-referrer",
+  "Strict-Transport-Security": "max-age=15552000; includeSubDomains",
+  "X-Content-Type-Options": "nosniff",
+  "X-DNS-Prefetch-Control": "off",
+  "X-Download-Options": "noopen",
+  "X-Frame-Options": "SAMEORIGIN",
+  "X-Permitted-Cross-Domain-Policies": "none",
+  "X-XSS-Protection": "0",
+};
+
+const gameInfoService = `http:gameinfoservice:5001/getGameInfo`;
+const playerInfoService = `http://playerinfoservice:5002/getPlayerInfo`;
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -20,6 +34,7 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept",
   );
+  res.set(headers);
   next();
 });
 
@@ -33,8 +48,6 @@ app.use((req, res, next) => {
 });
 
 app.get("/player/:id", async function (req, res) {
-  console.log("hello");
-  // Owned Games has an iclude appinfo param -rework below, to get rid of extra call
   try {
     const [playerDetails, friendsList, ownedGames, recentlyPlayed] =
       await Promise.allSettled([
@@ -50,6 +63,7 @@ app.get("/player/:id", async function (req, res) {
       ownedGames: ownedGames.value.data,
       recentlyPlayed: recentlyPlayed.value.data,
     };
+
     res.send(data);
   } catch (err) {
     console.log("errororr: ", err);
@@ -58,21 +72,6 @@ app.get("/player/:id", async function (req, res) {
       .send("Error fetching player details. Please try again later.");
   }
 });
-
-// Moving to service
-// app.get("/gameInfo/:id", async (req, res) => {
-//   try {
-//     const response = await axios.get(
-//       `http://store.steampowered.com/api/appdetails?appids=${req.params.id}`,
-//     );
-
-//     const data = response.data;
-//     // console.log("in route: ", data);
-//     res.send(data);
-//   } catch (err) {
-//     console.log("errororr: ", err);
-//   }
-// });
 
 app.get("/getPlayer/friends/:id", async function (req, res) {
   try {
@@ -91,7 +90,7 @@ app.get("/getNews/:id", async function (req, res) {
     const response = await axios.get(
       `http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=${req.params.id}&count=${req.query.count}&format=json`,
     );
-    // console.log("john: ", req.params.id, req.query.count);
+
     const data = response.data;
     res.send(data);
   } catch (err) {
@@ -153,11 +152,6 @@ app.get("/getUserGameStats/:id/:appid", async (req, res) => {
   } catch (error) {
     res.status(404).send(result);
   }
-});
-
-app.get("/:name", (req, res) => {
-  console.log(req.params.name);
-  res.send(req.params.name);
 });
 
 app.listen(app.get("port"), function () {

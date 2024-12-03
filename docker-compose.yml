@@ -18,6 +18,7 @@ services:
           path: package.json
 
   playerinfoservice:
+    env_file: .env
     build:
       context: ./server/services/playerInfoService
       dockerfile: Dockerfile
@@ -43,6 +44,7 @@ services:
       - 5000:5000
     environment:
         - SERVER_API_BASE_DOMAIN=http://127.0.0.1:5000
+        - SECRET_API_KEY='john'
     depends_on:
       - gameinfoservice
       - playerinfoservice
