@@ -25,8 +25,10 @@ const headers = {
   "X-XSS-Protection": "0",
 };
 
-const gameInfoService = `http:gameinfoservice:5001/getGameInfo`;
-const playerInfoService = `http://playerinfoservice:5002/getPlayerInfo`;
+// const gameInfoService = `http://gameinfoservice:5001/getGameInfo`;
+// const playerInfoService = `http://playerinfoservice:5002/getPlayerInfo`;
+const gameInfoService = `${process.env.GAMES_API_BASE_DOMAIN}/getGameInfo`;
+const playerInfoService = `${process.env.PLAYERS_API_BASE_DOMAIN}/getPlayerInfo`;
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

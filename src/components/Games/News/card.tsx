@@ -1,18 +1,19 @@
 // import { IProfile } from "../../interfaces/IProfile";
 import parse from 'html-react-parser';
 import { ShortDate } from '../../ShortDate';
+import { INewsItems } from '../../../interfaces';
 
-// interface IProps {
-//   user: IProfile;
-// }
+interface IProps {
+  newsItems: INewsItems[]
+}
 
-export const Card = ({ newsItems }) => {
+export const Card = ({ newsItems }: IProps) => {
   if (!newsItems.length) return
 
   return (
     newsItems.map((item, idx) => {
       const {
-        appid, author, contents, date, feed_type, feedlabel, feedname, gid, is_external_url, tags, title, url
+        author, contents, date, tags, title,
       } = item;
 
       // console.log('JOHNOSN: ', newsItems);

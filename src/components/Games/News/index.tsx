@@ -1,19 +1,22 @@
 
-import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './styles.css'
 import { Card } from './card';
+import { INewsState } from '../../../interfaces';
 // import { SearchBar } from '../SearchBar';
 
-const INITIAL_MAX_HEIGHT = 10000;
+interface IProps {
+    appId: number
+}
 
-export const News = ({ appId }) => {
-    // const [appId, setAppId] = useState(""); // 440 = Team Fortress 2
-    const [appData, setAppData] = useState({ newsitems: [] });
+
+export const News = ({ appId }: IProps) => {
+    const [appData, setAppData] = useState<INewsState>({ newsitems: [] });
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [count, setCount] = useState<number>(10);
 
-    const handleFetchNews = useMemo(() => async (val) => {
+    const handleFetchNews = useMemo(() => async (val: number) => {
 
         setLoading(() => true);
         try {

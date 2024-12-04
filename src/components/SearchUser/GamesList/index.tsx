@@ -14,7 +14,7 @@ const defaultCount = 10
 
 export const GamesList = ({ gamesList, userId }: IProps) => {
     const [gameData, setGameData] = useState<IGameData>({ games: [] });
-    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+    const [_errorMsg, setErrorMsg] = useState<string | null>(null);
     const [count, setCount] = useState<number>(defaultCount)
     const [loading, setLoading] = useState(false);
 

@@ -22,6 +22,7 @@ export interface IGameInfo {
     webm: { "480": string; max: string };
     highlight: boolean;
   }[];
+  currentPlayers?: number;
 }
 
 export interface IUserResponse {
@@ -202,4 +203,15 @@ export interface Screenshot {
 export interface SupportInfo {
   url: string;
   email: string;
+}
+
+export interface INewsItems {
+  author: string;
+  contents: string;
+  date: number;
+  tags?: string[];
+  title: string;
+}
+export interface INewsState {
+  newsitems: INewsItems[];
 }

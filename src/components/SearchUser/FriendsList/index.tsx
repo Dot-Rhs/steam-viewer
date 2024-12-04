@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react"
-import isSuccessful from "../../../helpers/isSuccesful";
 import { IFriendsData, IPlayerInfo } from "../../../interfaces";
-import Tooltip from "../../Tooltip";
-import { ShortDate } from "../../ShortDate";
 import { Friend } from "./Friend";
 
 interface IProps {

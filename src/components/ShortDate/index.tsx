@@ -1,6 +1,9 @@
 
+interface IProps {
+    time: number
+}
 
-export const ShortDate = ({ time }) => {
+export const ShortDate = ({ time }: IProps) => {
     const createdDate = new Date(time * 1000);
 
     return (

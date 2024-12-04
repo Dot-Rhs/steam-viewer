@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { Card } from "./card"
 import { IGameInfo } from "../../../interfaces";
 
-export const InfoPanel = ({ appId }) => {
+interface IProps {
+    appId: number
+}
+
+export const InfoPanel = ({ appId }: IProps) => {
     const [gameInfo, setGameInfo] = useState<IGameInfo | null>(null);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -35,7 +39,7 @@ export const InfoPanel = ({ appId }) => {
                         currentPlayers: gameData.currentPlayers
                     }
 
-                    setGameInfo((prev) => (formattedData));
+                    setGameInfo(() => (formattedData));
                 }
                 // setAppId(() => val);
 

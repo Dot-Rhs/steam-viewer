@@ -1,11 +1,10 @@
 // import { IProfile } from "../../interfaces/IProfile";
 
-import { IFriendsData, IGameDetailed, IGameInfo, IPlayerGames, IPlayerInfo, IRecentlyPlayed } from "../../interfaces";
+import { IFriendsData, IPlayerGames, IPlayerInfo, IRecentlyPlayed } from "../../interfaces";
 import { ShortDate } from "../ShortDate";
 import { FriendsList } from "./FriendsList";
 import { GamesList } from "./GamesList";
 import { PersonaState } from "./PersonaState";
-import { RecentlyPlayedList } from "./RecentlyPlayedList";
 
 interface IProps {
   player: IPlayerInfo;
@@ -14,7 +13,7 @@ interface IProps {
   recentlyPlayed?: IRecentlyPlayed
 }
 
-export const PersonaCard = ({ player, friendsList, gamesList, recentlyPlayed }: IProps) => {
+export const PersonaCard = ({ player, friendsList, gamesList }: IProps) => {
   const {
     steamid, communityvisibilitystate, personaname, profileurl, avatarfull, personastate, realname, timecreated, lastlogoff
   } = player;
@@ -31,10 +30,10 @@ export const PersonaCard = ({ player, friendsList, gamesList, recentlyPlayed }: 
           </p>
           }
           <p>Steam ID: {steamid}</p>
-          {communityvisibilitystate === 3 && <p>
+          {communityvisibilitystate === 3 && timecreated !== undefined ? <p>
             User joined on {" "}
             <ShortDate time={timecreated} />
-          </p>}
+          </p> : null}
           <p>
             User last logged off {" "}
             <ShortDate time={lastlogoff} />

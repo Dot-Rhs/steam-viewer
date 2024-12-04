@@ -1,9 +1,6 @@
-import { useEffect, useRef, useState } from "react"
-import { useClickOutside } from "../../useClickOutside"
+import { useEffect, useState } from "react"
 import { Modal } from "../../modal"
 import { IGameDetailed } from "../../../interfaces"
-// import Tooltip from "../../Tooltip/Tooltip.tsx";
-// import Tooltip from "../../Tooltip/index.tsx"
 import { Tooltip } from 'react-tooltip'
 
 interface IProps {
@@ -12,10 +9,28 @@ interface IProps {
     disabled?: boolean;
 }
 
+interface IAchievements {
+    name: string,
+    defaultvalue: number,
+    displayName: string,
+    hidden: number,
+    description: string,
+    icon: string,
+    icongray: string,
+    achieved?: number
+}
+
+interface IStats {
+    name: string,
+    defaultvalue: number,
+    displayName: string,
+    value: number
+}
+
 interface IStateInfo {
     achievements: {
-        achieved: [], unachieved: []
-    }, stats: []
+        achieved: IAchievements[], unachieved: IAchievements[]
+    }, stats: IStats[]
 }
 
 // Get total num achievements 3/12 etc etc etc
@@ -65,34 +80,33 @@ export const GameInfo = ({ gameData, userId, disabled = false }: IProps) => {
                 {(achieved?.length || unachieved?.length) ? (<div><h2>
                     Achievements
                 </h2>
-                    <div className='achievements-list'>
-                        {achieved?.map(item => {
+                    <div className='achievements-list' key={gameData.steam_appid}>
+                        {achieved?.map((item, idx) => {
                             return (
-                                <>
-                                    <a data-tooltip-id="achieved-tooltip"
-                                        data-tooltip-html={`<div><p><b>${ item.displayName } <br>Achieved</b></p>
+                                // <>
+                                <a data-tooltip-id="achieved-tooltip"
+                                    data-tooltip-html={`<div><p><b>${ item.displayName } <br>Achieved</b></p>
                                             <p className="description"><i>${ item.description }</i></p>
                                         </div>`}
-                                        data-tooltip-offset={15}
-                                    >
-                                        <img src={item.icon} alt={`${ item.displayName } Achieved`} className="info-image"></img>
-                                    </a>
-                                </>
+                                    data-tooltip-offset={15} key={item.displayName + idx}
+                                >
+                                    <img src={item.icon} alt={`${ item.displayName } Achieved`} className="info-image"></img>
+                                </a>
                             )
                         })}
                         <Tooltip id='achieved-tooltip' />
-                        {unachieved?.map(item => {
+                        {unachieved?.map((item: IAchievements, idx: number) => {
                             return (
-                                <>
-                                    <a data-tooltip-id="unachieved-tooltip"
-                                        data-tooltip-html={`<div><p><b>${ item.displayName } Unachieved</b></p>
+                                <a data-tooltip-id="unachieved-tooltip"
+                                    data-tooltip-html={`<div><p><b>${ item.displayName } Unachieved</b></p>
                                             <p className="description"><i>${ item.description }</i></p>
                                         </div>`}
-                                        data-tooltip-offset={15}
-                                    >
-                                        <img src={item.icon} alt={`${ item.displayName } Unachieved`} className="info-image"></img>
-                                    </a>
-                                </>
+                                    data-tooltip-offset={15}
+                                    key={item.displayName + idx}
+                                >
+                                    <img src={item.icon} alt={`${ item.displayName } Unachieved`} className="info-image"></img>
+                                </a>
+
                             )
                         })}
                         <Tooltip id='unachieved-tooltip' />
@@ -103,7 +117,7 @@ export const GameInfo = ({ gameData, userId, disabled = false }: IProps) => {
                 {stats.length ?
                     <div><h2>Stats</h2>
                         <div className="stats-list">
-                            {stats.map(item => <p>{item.displayName}: <b>{item.value ?? 0}</b></p>)}
+                            {stats.map((item, idx) => <p key={item.displayName + idx}>{item.displayName}: <b>{item.value ?? 0}</b></p>)}
                         </div>
                     </div> : <p>No Stats data available</p>}
             </div>
@@ -114,7 +128,7 @@ export const GameInfo = ({ gameData, userId, disabled = false }: IProps) => {
         <div style={disabled ? {
             filter: 'blur(10px)'
             , pointerEvents: 'none'
-        } : {}}>
+        } : { cursor: "pointer" }}>
             <a data-tooltip-id={`${ gameData.steam_appid }-tooltip`}>
 
                 <div key={`gamep-appid${ gameData.steam_appid }`} >
@@ -128,7 +142,7 @@ export const GameInfo = ({ gameData, userId, disabled = false }: IProps) => {
 
             {openModal ? (
                 <Modal
-                    id="player-modal"
+                    id={"player-modal"}
                     body={<ModalBody />
                     }
                     closeModal={() => setOpenModal(() => false)}

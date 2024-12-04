@@ -1,7 +1,13 @@
 import { useState } from "react"
 import './styles.css'
 
-export const SearchBar = ({ handleSubmit, placeHolder, name }) => {
+interface IProps {
+    handleSubmit: (arg: string) => void;
+    placeHolder: string;
+    name: string;
+}
+
+export const SearchBar = ({ handleSubmit, placeHolder, name }: IProps) => {
     const [value, setValue] = useState('')
 
     return (

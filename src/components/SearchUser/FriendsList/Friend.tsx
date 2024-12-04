@@ -1,8 +1,5 @@
-import { useRef, useState } from "react";
-import { ShortDate } from "../../ShortDate";
+import { useState } from "react";
 import { Modal } from "../../modal";
-import { PersonaState } from "../PersonaState";
-import { useClickOutside } from "../../useClickOutside";
 import { IFriendsState } from ".";
 import { PersonaCard } from "../card";
 import { Tooltip } from "react-tooltip";

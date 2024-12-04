@@ -1,6 +1,5 @@
 // import { IProfile } from "../../interfaces/IProfile";
 import parse from 'html-react-parser';
-import { ShortDate } from '../../ShortDate';
 import { IGameInfo } from '../../../interfaces';
 
 import './styles.css'
@@ -15,16 +14,6 @@ interface IProps {
 
 export const Card = ({ data }: IProps) => {
   console.log('GAMEINFO: ', data);
-
-  // if (!gameInfo.length) return
-
-  // return (
-  //   gameInfo.map((item, idx) => {
-  //     const {
-  //       appid, author, contents, date, feed_type, feedlabel, feedname, gid, is_external_url, tags, title, url
-  //     } = item;
-
-  //     console.log('JOHNOSN: ', newsItems);
 
   return (
 
