@@ -7,7 +7,7 @@ let handleStats = require("./helpers/handleStats.js");
 
 dotenv.config();
 
-app.set("port", 5000);
+app.set("port", process.env.PORT || 5000);
 
 const headers = {
   "Content-Security-Policy":
