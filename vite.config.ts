@@ -1,19 +1,26 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  // build: {
-  //   manifest: true,
-  //   rollupOptions: {
-  //     input: "./src/main.jsx",
-  //   },
-  // },
-  server: {
-    // proxy: {
-    //   "/api": "http://localhost:5000/", // the address that u serve in the backend
+
+console.log("GARY: ", process.env.PORT);
+
+export default ({ mode }: { mode: string }) => {
+  process.env = loadEnv(mode, "../", "");
+
+  return defineConfig({
+    plugins: [react()],
+    // build: {
+    //   manifest: true,
+    //   rollupOptions: {
+    //     input: "./src/main.jsx",
+    //   },
     // },
-    port: 3001,
-  },
-});
+    server: {
+      // proxy: {
+      //   "/api": "http://localhost:5000/", // the address that u serve in the backend
+      // },
+      port: (Number(process.env.PORT) as number) ?? 3001,
+    },
+  });
+};
