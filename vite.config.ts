@@ -20,7 +20,7 @@ export default ({ mode }: { mode: string }) => {
       // proxy: {
       //   "/api": "http://localhost:5000/", // the address that u serve in the backend
       // },
-      port: (Number(process.env.PORT) as number) ?? 3001,
+      port: (Number(process.env.PORT) as number) || 3001,
     },
   });
 };
