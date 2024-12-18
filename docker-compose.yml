@@ -1,16 +1,16 @@
 services:
-  gameinfoservice:  
-    build:    
-      context: ./server/services/gameInfoService # Correct the path if necessary 
-      dockerfile: Dockerfile 
-    ports: 
+  gameinfoservice:
+    build:
+      context: ../steam-viewer-games-service/ # Correct the path if necessary 
+      dockerfile: Dockerfile
+    ports:
       - 5001:5001
     environment:
-        - GAMES_API_BASE_DOMAIN=http://127.0.0.1:5001
+      - GAMES_API_BASE_DOMAIN=http://127.0.0.1:5001
     develop:
       watch:
         - action: sync
-          path: ./server
+          path: ../steam-viewer-games-service/
           target: /usr/src/app/
           ignore:
             - node_modules/
@@ -20,45 +20,45 @@ services:
   playerinfoservice:
     env_file: .env
     build:
-      context: ./server/services/playerInfoService
+      context: ../steam-viewer-player-service/
       dockerfile: Dockerfile
     ports:
       - 5002:5002
     environment:
-        - PLAYERS_API_BASE_DOMAIN=http://127.0.0.1:5002
+      - PLAYERS_API_BASE_DOMAIN=http://127.0.0.1:5002
     develop:
       watch:
         - action: sync
-          path: ./server
+          path: ../steam-viewer-player-service/
           target: /usr/src/app/
           ignore:
             - node_modules/
         - action: rebuild
           path: package.json
 
-  server:      
+  server:
     build:
-      context: ./server/
+      context: ../steam-viewer-backend/
       dockerfile: Dockerfile
     ports:
       - 5000:5000
     environment:
-        - SERVER_API_BASE_DOMAIN=http://127.0.0.1:5000
-        - SECRET_API_KEY='john'
+      - SERVER_API_BASE_DOMAIN=http://127.0.0.1:5000
+      - SECRET_API_KEY='john'
     depends_on:
       - gameinfoservice
       - playerinfoservice
     develop:
       watch:
         - action: sync
-          path: ./server
+          path: ../steam-viewer-backend/
           target: /usr/src/app/
           ignore:
             - node_modules/
         - action: rebuild
           path: package.json
 
-  steamviewer:      
+  steamviewer:
     build:
       context: ./
       dockerfile: Dockerfile

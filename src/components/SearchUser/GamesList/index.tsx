@@ -31,7 +31,7 @@ export const GamesList = ({ gamesList, userId }: IProps) => {
 
                 if (tempGame) {
                     try {
-                        const response = await fetch(`${ import.meta.env.VITE_LOCAL_GAMES_API_BASE_DOMAIN }/getGameInfo/${ tempGame.appid }`, { signal: abortSignal })
+                        const response = await fetch(`${ process.env.VITE_LOCAL_GAMES_API_BASE_DOMAIN }/getGameInfo/${ tempGame.appid }`, { signal: abortSignal })
 
                         const responseData = await response.json()
 

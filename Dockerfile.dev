@@ -2,6 +2,8 @@ FROM node:19
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
+RUN npm run build
 COPY . .
-EXPOSE 5002
-CMD ["./node_modules/.bin/nodemon", "playerInfoService.js"]
+EXPOSE 3001
+RUN npm i
+CMD ["npm", "run" ,"prod"]
