@@ -51,9 +51,8 @@ export const GameInfo = ({ gameData, userId, disabled = false }: IProps) => {
         const fetchStats = async () => {
 
             setLoading(() => true);
-            console.log(`http://localhost:5000/getUserGameStats/${ userId }/${ gameData.steam_appid }`);
             try {
-                const getStats = await fetch(`http://localhost:5000/getUserGameStats/${ userId }/${ gameData.steam_appid }`);
+                const getStats = await fetch(`${ import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/getUserGameStats/${ userId }/${ gameData.steam_appid }`);
 
                 const data = await getStats.json() as IStateInfo;
 
