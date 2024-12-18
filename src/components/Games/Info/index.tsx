@@ -17,12 +17,13 @@ export const InfoPanel = ({ appId }: IProps) => {
 
             setLoading(() => true);
             try {
-                const getGameInfo = await fetch(`${ import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/aggregateGameInfo/${ appId }`);
-                console.log('what2: ', appId);
+                const getGameInfo = await fetch(`${ process.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/aggregateGameInfo/${ appId }`);
 
+                // console.log('INFO: ', await getGameInfo.json());
                 const infoData = await getGameInfo.json();
-                // const friendsData = await getFriends.json()
-                console.log('sdsds: ', infoData);
+
+
+
                 if (infoData.success) {
                     const gameData = infoData.data
 
@@ -41,13 +42,8 @@ export const InfoPanel = ({ appId }: IProps) => {
 
                     setGameInfo(() => (formattedData));
                 }
-                // setAppId(() => val);
 
-                // console.log('DAAA: ', await data[`${ appId }`])
-                // if (tempHeight === null) return;
-                // setHeight(height === 0 ? tempHeight : 0);
             } catch (error: unknown) {
-                console.log('you got an errrrr: ', error)
                 if (error instanceof Error) setErrorMsg(() => error?.message);
             }
             setLoading(() => false);
@@ -56,7 +52,7 @@ export const InfoPanel = ({ appId }: IProps) => {
     }, [appId])
 
     return (
-        <div className="info-container">INFOOOO
+        <div className="info-container">
             {loading && <h2>Loading...</h2>}
             {errorMsg && <h2>{errorMsg}</h2>}
             <>
