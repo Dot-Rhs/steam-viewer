@@ -23,7 +23,7 @@ export const PersonaCard = ({ player, friendsList, gamesList }: IProps) => {
       <div className="name-container">
         <img src={avatarfull} className="avatar" alt="User Image" />
         <div className="name-details">
-          <a href={profileurl}>{personaname} <img src={'/public/icons/external-link.svg'} alt='External Link' />
+          <a href={profileurl}>{personaname} <img src={'/assets/icons/external-link.svg'} alt='External Link' />
           </a>
           {realname && <p>
             {realname}
