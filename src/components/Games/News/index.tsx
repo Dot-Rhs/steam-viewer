@@ -9,7 +9,7 @@ interface IProps {
     appId: number
 }
 
-console.log('DAR: ', process.env, process.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN);
+console.log('DAR: ', import.meta.env, process.env, process.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN);
 
 export const News = ({ appId }: IProps) => {
     const [appData, setAppData] = useState<INewsState>({ newsitems: [] });
