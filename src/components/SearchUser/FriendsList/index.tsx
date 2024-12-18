@@ -27,7 +27,7 @@ export const FriendsList = ({ friends }: IProps) => {
             // Rework this to get rid of map and use comma-delimited ids as supported by steam api
             // const friendsDetails = await friends.map(async (friend) => {
             try {
-                const getPlayer = await fetch(`${ process.env.VITE_LOCAL_PLAYERS_API_BASE_DOMAIN }/getPlayerInfo/${ friendIds }`, { signal: abortController.signal });
+                const getPlayer = await fetch(`${ import.meta.env.VITE_LOCAL_PLAYERS_API_BASE_DOMAIN }/getPlayerInfo/${ friendIds }`, { signal: abortController.signal });
 
                 const data = await getPlayer.json() as { players: IPlayerInfo[] }
 

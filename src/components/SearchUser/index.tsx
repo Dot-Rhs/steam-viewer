@@ -15,9 +15,9 @@ export const SearchUser = () => {
   const handleSubmit = async (value: string) => {
     setLoading(() => true);
     try {
-      const getPlayer = await fetch(`${ process.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/player/${ value }`);
+      const getPlayer = await fetch(`${ import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/player/${ value }`);
 
-      console.log('PROCESS: ', `${ process.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/player/${ value }`);
+      console.log('PROCESS: ', `${ import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/player/${ value }`);
       const data = await getPlayer.json() as IUserResponse
 
       setUserData(() => ({ player: data.players[0], friendsList: data.friends, gamesList: data.ownedGames, recentlyPlayed: data.recentlyPlayed }));
