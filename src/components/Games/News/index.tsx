@@ -9,7 +9,7 @@ interface IProps {
     appId: number
 }
 
-console.log('DAR: ', import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN);
+console.log('DAR: ', process.env, process.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN);
 
 export const News = ({ appId }: IProps) => {
     const [appData, setAppData] = useState<INewsState>({ newsitems: [] });
@@ -21,7 +21,7 @@ export const News = ({ appId }: IProps) => {
 
         setLoading(() => true);
         try {
-            const getAppNews = await fetch(`${ import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/getNews/${ val }?count=${ count }`);
+            const getAppNews = await fetch(`${ process.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/getNews/${ val }?count=${ count }`);
             console.log('what2: ', val, count, appId);
 
             const data = await getAppNews.json();

@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 
-console.log("GARY: ", process.env.PORT);
+console.log("GARY2: ", process.env);
 
 export default ({ mode }: { mode: string }) => {
   process.env = loadEnv(mode, "../", "");
@@ -16,10 +16,17 @@ export default ({ mode }: { mode: string }) => {
     //     input: "./src/main.jsx",
     //   },
     // },
+    define: {
+      "process.env": {
+        VITE_LOCAL_SERVER_API_BASE_DOMAIN:
+          "https://steam-viewer-server-9cb9b1697b74.herokuapp.com",
+        VITE_LOCAL_GAMES_API_BASE_DOMAIN:
+          "https://steam-viewer-games-service-1ff46a6c2739.herokuapp.com",
+        VITE_LOCAL_PLAYERS_API_BASE_DOMAIN:
+          "https://steam-viewer-player-service-a1b780795ae9.herokuapp.com",
+      },
+    },
     server: {
-      // proxy: {
-      //   "/api": "http://localhost:5000/", // the address that u serve in the backend
-      // },
       port: (Number(process.env.PORT) as number) || 3001,
     },
   });
