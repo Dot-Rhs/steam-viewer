@@ -16,8 +16,6 @@ export const Card = ({ newsItems }: IProps) => {
         author, contents, date, tags, title,
       } = item;
 
-      // console.log('JOHNOSN: ', newsItems);
-
       return (
 
         <div className="article" key={`news-item-${ idx }`} >

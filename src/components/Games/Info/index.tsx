@@ -17,10 +17,11 @@ export const InfoPanel = ({ appId }: IProps) => {
 
             setLoading(() => true);
             try {
-                const getGameInfo = await fetch(`${ process.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/aggregateGameInfo/${ appId }`);
+                const getGameInfo = await fetch(`${ import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/aggregateGameInfo/${ appId }`);
+                console.log('what2: ', appId);
 
-                // console.log('INFO: ', await getGameInfo.json());
                 const infoData = await getGameInfo.json();
+                console.log('INFO: ', infoData);
 
 
 
