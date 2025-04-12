@@ -4,13 +4,30 @@ import { PersonaCard } from "./card";
 import "./styles.css";
 import { SearchBar } from "../SearchBar";
 import { IUserData, IUserResponse } from "../../interfaces";
+import useGlobalContext from "../context/hook/useGlobalContext";
 
 export const SearchUser = () => {
   const [userData, setUserData] = useState<IUserData | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const { playerData, setPlayerData } = useGlobalContext()
+
   const handleSubmit = async (value: string) => {
+    setErrorMsg(() => null);
+    if (playerData?.player.steamid.toString() === value) {
+      console.log('hi');
+
+      setUserData(() => playerData)
+      return
+    }
+
+    console.log('no: ', playerData?.player.steamid, Number(value));
+
+    const regex = new RegExp('^[0-9]+$')
+
+    if (!regex.test(value)) return setErrorMsg(() => "Please enter a valid Steam ID\nNumeric values only");
+
     setLoading(() => true);
     try {
       const getPlayer = await fetch(`${ import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/player/${ value }`);
@@ -18,6 +35,7 @@ export const SearchUser = () => {
       const data = await getPlayer.json() as IUserResponse
 
       setUserData(() => ({ player: data.players[0], friendsList: data.friends, gamesList: data.ownedGames, recentlyPlayed: data.recentlyPlayed }));
+      setPlayerData(() => ({ player: data.players[0], friendsList: data.friends, gamesList: data.ownedGames, recentlyPlayed: data.recentlyPlayed }));
     } catch (error: unknown) {
       if (error instanceof Error) setErrorMsg(() => error?.message);
     }

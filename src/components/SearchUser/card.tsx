@@ -25,9 +25,10 @@ export const PersonaCard = ({ player, friendsList, gamesList }: IProps) => {
         <div className="name-details">
           <a href={profileurl}>{personaname} <img src={'/assets/icons/external-link.svg'} alt='External Link' />
           </a>
-          {realname && <p>
-            {realname}
-          </p>
+          {realname &&
+            <p>
+              {realname}
+            </p>
           }
           <p>Steam ID: {steamid}</p>
           {communityvisibilitystate === 3 && timecreated !== undefined ? <p>
