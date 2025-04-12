@@ -11,6 +11,12 @@ export const SearchUser = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (value: string) => {
+    setErrorMsg(() => null);
+
+    const regex = new RegExp('^[0-9]+$')
+
+    if (!regex.test(value)) return setErrorMsg(() => "Please enter a valid Steam ID\nNumeric values only");
+
     setLoading(() => true);
     try {
       const getPlayer = await fetch(`${ import.meta.env.VITE_LOCAL_SERVER_API_BASE_DOMAIN }/player/${ value }`);

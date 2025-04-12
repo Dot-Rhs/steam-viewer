@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ReactElement } from "react";
 import TabItem from "./TabItem";
 import { sanitizeForId } from "../../stringUtils";
@@ -13,10 +13,10 @@ export const TabList: React.FC<TabListProps> = ({ children, activeTabIndex = 0 }
         setActiveTab(index);
     };
 
-    const tabs = React.Children.toArray(children).filter(
+    const tabs = useMemo(() => React.Children.toArray(children).filter(
         (child): child is ReactElement<TabItemProps> =>
             React.isValidElement(child) && child.type === TabItem
-    );
+    ), [children]);
 
     return (
         <div className="tabs">
