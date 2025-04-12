@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "./card"
 import { IGameInfo } from "../../../interfaces";
 import useGlobalContext from "../../context/hook/useGlobalContext";
@@ -44,7 +44,6 @@ export const InfoPanel = ({ appId }: IProps) => {
                 setInfoCache(() => (formattedData));
                 setErrorMsg(() => null);
             }
-
         } catch (error: unknown) {
             if (error instanceof Error) setErrorMsg(() => error?.message);
         }

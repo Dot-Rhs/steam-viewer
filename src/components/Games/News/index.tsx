@@ -1,5 +1,5 @@
 
-import { useEffect, useMemo, useState, cache } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './styles.css'
 import { Card } from './card';
 import { INewsState } from '../../../interfaces';
@@ -11,13 +11,14 @@ interface IProps {
 }
 
 export const News = ({ appId }: IProps) => {
-    const { newsCache, setNewsCache } = useGlobalContext()
+    const { newsCache, setNewsCache, currentAppId, setCurrentAppId } = useGlobalContext()
     const [appData, setAppData] = useState<INewsState>(newsCache);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-    const [count, setCount] = useState<number>(10);
 
     const handleFetchNews = useMemo(() => async (val: number) => {
+        const count = appData.newsitems.length + 10
+
         setLoading(() => true);
 
         try {
@@ -28,29 +29,21 @@ export const News = ({ appId }: IProps) => {
             const data = await getAppNews.json();
 
             if (data.appnews.newsitems) {
-                setAppData((prev) => ({ newsitems: [...data.appnews.newsitems] }));
-                setNewsCache((prev) => ({ newsitems: [...data.appnews.newsitems] }));
-                setCount((prev) => prev + 10)
+                setAppData(() => ({ newsitems: [...data.appnews.newsitems] }));
+                setNewsCache(() => ({ newsitems: [...data.appnews.newsitems] }));
+                setCurrentAppId(() => appId)
             }
         } catch (error: unknown) {
             if (error instanceof Error) setErrorMsg(() => error?.message);
         }
 
         setLoading(() => false);
-    }, [appId, count]);
+    }, [appId, appData]);
 
     useEffect(() => {
-        if (newsCache.newsitems.length) {
-
-            setAppData(() => newsCache)
-            setCount(() => newsCache.newsitems.length + 10)
-            return
-        } else {
-            console.log('m0');
-
+        if (currentAppId !== appId) {
             handleFetchNews(appId)
         }
-
     }, [appId])
 
     return (
@@ -59,9 +52,7 @@ export const News = ({ appId }: IProps) => {
             {errorMsg && <h2>{errorMsg}</h2>}
             {
                 <>
-
                     <Card newsItems={appData?.newsitems} />
-
                     {appData.newsitems.length ? <button onClick={() => handleFetchNews(appId)
                     }>Load More...</button> : null}
                 </>
