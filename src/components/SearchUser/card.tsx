@@ -46,7 +46,7 @@ export const PersonaCard = ({ player, friendsList, gamesList }: IProps) => {
         <>
           <h2>Friends List</h2>
           <div className="friends-info">
-            <FriendsList friends={friendsList} />
+            <FriendsList friends={friendsList} userId={player.steamid} />
           </div>
         </>
         : null}
@@ -56,7 +56,6 @@ export const PersonaCard = ({ player, friendsList, gamesList }: IProps) => {
           <h2>{personaname}'s Games</h2>
           <div className="games-info">
             <GamesList gamesList={gamesList} userId={player.steamid} />
-            {/* <FriendsList friends={friendsList} /> */}
           </div>
         </>
       }

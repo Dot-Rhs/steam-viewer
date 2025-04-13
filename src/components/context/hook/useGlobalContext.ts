@@ -8,7 +8,7 @@ const useGlobalContext = () => {
     return context;
   }
 
-  throw Error("No context found");
+  throw new Error("No context found");
 };
 
 export default useGlobalContext;
