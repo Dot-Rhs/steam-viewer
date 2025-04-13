@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { Card } from "./card"
 import { IGameInfo } from "../../../interfaces";
-import useGlobalContext from "../../context/hook/useGlobalContext";
+import useGlobalStateContext from "../../context/hook/useGlobalContext";
 
 interface IProps {
     appId: number
 }
 
 export const InfoPanel = ({ appId }: IProps) => {
-    const { infoCache, setInfoCache } = useGlobalContext()
+    const { infoCache, setInfoCache } = useGlobalStateContext()
 
     const [gameInfo, setGameInfo] = useState<IGameInfo | null>(infoCache);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);

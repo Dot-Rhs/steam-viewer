@@ -4,25 +4,22 @@ import { PersonaCard } from "./card";
 import "./styles.css";
 import { SearchBar } from "../SearchBar";
 import { IUserData, IUserResponse } from "../../interfaces";
-import useGlobalContext from "../context/hook/useGlobalContext";
+import useStateContext from "../context/hook/useStateContext";
 
 export const SearchUser = () => {
   const [userData, setUserData] = useState<IUserData | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const { playerData, setPlayerData } = useGlobalContext()
+  const { playerData, setPlayerData, setCurrentId } = useStateContext();
 
   const handleSubmit = async (value: string) => {
     setErrorMsg(() => null);
+    // Steam ID is 17 digits long. Bigger than allowed number of digits in a JS number, without the use of BigNum packages. 
     if (playerData?.player.steamid.toString() === value) {
-      console.log('hi');
-
       setUserData(() => playerData)
       return
     }
-
-    console.log('no: ', playerData?.player.steamid, Number(value));
 
     const regex = new RegExp('^[0-9]+$')
 
@@ -36,6 +33,7 @@ export const SearchUser = () => {
 
       setUserData(() => ({ player: data.players[0], friendsList: data.friends, gamesList: data.ownedGames, recentlyPlayed: data.recentlyPlayed }));
       setPlayerData(() => ({ player: data.players[0], friendsList: data.friends, gamesList: data.ownedGames, recentlyPlayed: data.recentlyPlayed }));
+      setCurrentId(() => value)
     } catch (error: unknown) {
       if (error instanceof Error) setErrorMsg(() => error?.message);
     }

@@ -5,7 +5,7 @@ import { Tooltip } from 'react-tooltip'
 
 interface IProps {
     gameData: IGameDetailed;
-    userId: number;
+    userId: string | number;
     disabled?: boolean;
 }
 

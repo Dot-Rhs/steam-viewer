@@ -1,26 +1,31 @@
 import { useEffect, useState } from "react"
 import { IFriendsData, IPlayerInfo } from "../../../interfaces";
 import { Friend } from "./Friend";
+import useStateContext from "../../context/hook/useStateContext";
 
 interface IProps {
     friends: IFriendsData[]
+    userId: string | number;
 }
 
 export interface IFriendsState extends IFriendsData, Omit<IPlayerInfo, 'steamid'> { }
 
 const defaultCount = 20
 
-export const FriendsList = ({ friends }: IProps) => {
-    const [friendsList, setFriendsList] = useState<IFriendsState[]>([]);
+export const FriendsList = ({ friends, userId }: IProps) => {
+    const { friendsCache, setFriendsCache, currentId } = useStateContext()
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-    const [count, setCount] = useState(20)
+    const [count, setCount] = useState(defaultCount >= friendsCache?.length ? defaultCount : friendsCache?.length)
 
 
     useEffect(() => {
+        if (friendsCache?.length && currentId === userId && friendsCache.length >= count) return
+
         const abortController = new AbortController()
 
         const handleFetch = async () => {
+            setErrorMsg(() => null);
             setLoading(() => true);
             const friendIds = friends.slice(count - defaultCount, count).map(friend => friend.steamid).toString()
 
@@ -40,7 +45,7 @@ export const FriendsList = ({ friends }: IProps) => {
                         }
                     }).filter(x => !!x)
 
-                    setFriendsList((prev) => [...prev, ...result])
+                    setFriendsCache((prev) => [...prev, ...result])
                 }
 
             } catch (error: unknown) {
@@ -61,23 +66,21 @@ export const FriendsList = ({ friends }: IProps) => {
         }
     }, [friends, count])
 
-
     return (
         <>
-            {friendsList.length ? friendsList.map((friend) => (<Friend data={friend} key={friend.steamid} />
+            {friendsCache.length ? friendsCache.map((friend) => (<Friend data={friend} key={friend.steamid} />
             )) : null}
             <div>
                 {loading ? <p>Loading...</p> : null}
                 {errorMsg ? <p>Error getting friends...</p> : null}
                 {!loading && count < friends.length ?
                     <>
-                        <p>...{friends.length - friendsList.length} more</p>
+                        <p>...{friends.length - friendsCache.length} more</p>
                         <button onClick={() => setCount((prev) => prev + defaultCount)
                         }>Load More</button>
                     </>
                     : null}
             </div>
         </>
-
     )
 }

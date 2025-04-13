@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react"
-import { IGameDetailed, IOwnedGame, IPlayerGames } from "../../../interfaces";
+import { IOwnedGame, IPlayerGames } from "../../../interfaces";
 import { GameInfo } from "./GameInfo";
+import useStateContext from "../../context/hook/useStateContext";
 
 interface IProps {
     gamesList: IPlayerGames
-    userId: number;
-}
-interface IGameData {
-    games: IGameDetailed[]
+    userId: string | number;
 }
 
 const defaultCount = 10
 
 export const GamesList = ({ gamesList, userId }: IProps) => {
-    const [gameData, setGameData] = useState<IGameData>({ games: [] });
+    const { gameData, setGameData, currentId } = useStateContext()
+
+    // const [gameData, setGameData] = useState<IGameData>({ games: [] });
     const [_errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [count, setCount] = useState<number>(defaultCount)
+    const [count, setCount] = useState<number>(defaultCount > gameData?.games?.length ? defaultCount : gameData?.games?.length)
     const [loading, setLoading] = useState(false);
 
     const batchDelayFetch = async (abortSignal: AbortSignal) => {
+        if (gameData?.games?.length && currentId === userId && count === gameData?.games?.length) return
+        console.log('bon');
+
         setLoading(() => true)
 
         let i = 0

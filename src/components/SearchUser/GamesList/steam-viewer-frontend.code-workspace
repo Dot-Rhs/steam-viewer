@@ -1,17 +1,16 @@
 {
-	"folders": [
-		{
-			"path": "../../../.."
-		},
-		{
-			"path": "../../../../../steam-viewer-backend"
-		},
-		{
-			"path": "../../../../../steam-viewer-games-service"
-		},
-		{
-			"path": "../../../../../steam-viewer-player-service"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "../../../../../steam-viewer-backend"
+    },
+    {
+      "path": "../../../.."
+    },
+    {
+      "path": "../../../../../steam-viewer-games-service"
+    },
+    {
+      "path": "../../../../../steam-viewer-player-service"
+    }
+  ]
 }

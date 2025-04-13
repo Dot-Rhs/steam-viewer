@@ -44,6 +44,7 @@ export const News = ({ appId }: IProps) => {
         if (currentAppId !== appId) {
             handleFetchNews(appId)
         }
+
     }, [appId])
 
     return (

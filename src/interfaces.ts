@@ -215,3 +215,7 @@ export interface INewsItems {
 export interface INewsState {
   newsitems: INewsItems[];
 }
+
+export interface IGameData {
+  games: IGameDetailed[];
+}
